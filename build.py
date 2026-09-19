@@ -42,6 +42,7 @@ def main():
                 problems.append("%s: нет ни одного фото" % pid)
             items.append({
                 "id": pid,
+                "model": (row.get("model") or "").strip(),
                 "category": (row.get("category") or "").strip(),
                 "name": row["name"].strip(),
                 "color": row["color"].strip(),
@@ -56,10 +57,23 @@ def main():
                 "note": (row.get("note") or "").strip(),
             })
 
-    OUT.write_text("window.PRODUCTS = " + json.dumps(items, ensure_ascii=False, indent=1) + ";\n",
+    # Одна модель в нескольких размерах (одинаковый `model`) — одна карточка с вариантами
+    groups = {}
+    for it in items:
+        key = it.pop("model") or it["id"]
+        g = groups.setdefault(key, {**{k: v for k, v in it.items() if k not in ("size", "status")},
+                                    "id": key, "variants": []})
+        g["variants"].append({"id": it["id"], "size": it["size"], "status": it["status"]})
+        if not g["photos"] and it["photos"]:
+            g["photos"] = it["photos"]
+    grouped = list(groups.values())
+    for g in grouped:
+        st = {v["status"] for v in g["variants"]}
+        g["status"] = "available" if "available" in st else "reserved" if "reserved" in st else "sold"
+    OUT.write_text("window.PRODUCTS = " + json.dumps(grouped, ensure_ascii=False, indent=1) + ";\n",
                    encoding="utf-8")
     sold = sum(i["status"] == "sold" for i in items)
-    print("Товаров: %d (продано %d) → %s" % (len(items), sold, OUT.relative_to(ROOT)))
+    print("Вещей: %d (продано %d), карточек: %d → %s" % (len(items), sold, len(grouped), OUT.relative_to(ROOT)))
     if problems:
         print("\nПроверить:")
         for p in problems:

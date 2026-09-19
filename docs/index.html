@@ -79,9 +79,9 @@
     display: grid; gap: 28px 14px; padding-block: 24px 56px;
     grid-template-columns: repeat(auto-fill, minmax(min(160px, 42vw), 1fr));
   }
-  @media (min-width: 720px) { .grid { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 40px 22px; } }
+  @media (min-width: 720px) { .grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 36px 20px; } }
   .card { display: grid; gap: 10px; align-content: start; background: none; border: 0; padding: 0; text-align: left; cursor: pointer; }
-  .ph { position: relative; aspect-ratio: 3 / 4; background: var(--photo); overflow: hidden; }
+  .ph { position: relative; aspect-ratio: 9 / 16; background: var(--photo); overflow: hidden; }
   .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
   .card:hover .ph img { transform: scale(1.025); }
   .ph .none { position: absolute; inset: 0; display: grid; place-items: center; font: 400 22px var(--display); color: var(--muted); }
@@ -124,9 +124,9 @@
   }
   dialog::backdrop { background: var(--shade); }
   .sheet { display: grid; gap: 0; }
-  @media (min-width: 760px) { .sheet { grid-template-columns: 1.1fr 1fr; } }
+  @media (min-width: 760px) { .sheet { grid-template-columns: 1fr 1.15fr; } }
   .gallery { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; background: var(--photo); scrollbar-width: thin; }
-  .gallery > * { flex: 0 0 100%; scroll-snap-align: start; aspect-ratio: 3 / 4; }
+  .gallery > * { flex: 0 0 100%; scroll-snap-align: start; aspect-ratio: 9 / 16; }
   .gallery img { width: 100%; height: 100%; object-fit: cover; }
   .gallery .none { display: grid; place-items: center; font: 400 28px var(--display); color: var(--muted); }
   .dots { display: flex; justify-content: center; gap: 6px; padding-block: 10px 0; }
@@ -144,6 +144,16 @@
   .measures td { border-top: 1px solid var(--line); padding: 8px 0; font-size: 18px; }
   .measures td small { font-size: 12px; color: var(--muted); margin-left: 2px; }
   .hint { font-size: 13px; color: var(--muted); margin: -8px 0 0; }
+  .sizes { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .spec-label { color: var(--muted); font-size: 15px; margin-right: 10px; }
+  .szchip { min-width: 48px; height: 40px; padding: 0 14px; border: 1px solid var(--line); background: var(--ground);
+            cursor: pointer; font-size: 15px; font-weight: 500; }
+  .szchip small { font-size: 11px; color: var(--muted); }
+  .szchip[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--ground); }
+  .szchip[aria-pressed="true"] small { color: var(--line); }
+  .szchip.sold { text-decoration: line-through; color: var(--muted); }
+  .szchip.reserved { border-style: dashed; }
+  .size s { color: var(--muted); }
   .order {
     display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 22px;
     background: var(--accent); color: var(--accent-ink); text-decoration: none; font-weight: 600; font-size: 16px;
@@ -223,14 +233,17 @@
   const rub = (n) => n == null ? "" : n.toLocaleString("ru-RU") + " ₽";
   const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const tgLink = (text) => "https://t.me/" + MANAGER + (text ? "?text=" + encodeURIComponent(text) : "");
-  const orderText = (p) => p.status === "reserved"
-    ? `Здравствуйте! ${p.id} «${p.name}» (${p.size}) сейчас в брони — подскажите, если освободится?`
-    : `Здравствуйте! Хочу ${p.id} «${p.name}», ${p.color}, размер ${p.size}.`;
+  const orderText = (p, v) => v.status === "reserved"
+    ? `Здравствуйте! ${v.id} «${p.name}» (${v.size}) сейчас в брони — подскажите, если освободится?`
+    : `Здравствуйте! Хочу ${v.id} «${p.name}», ${p.color}, размер ${v.size}.`;
+  const sizesOf = (p) => [...new Set(p.variants.map((v) => v.size))];
+  const sizeLine = (p) => sizesOf(p).map((sz) =>
+    p.variants.some((v) => v.size === sz && v.status !== "sold") ? esc(sz) : `<s>${esc(sz)}</s>`).join(" · ");
   const tagFor = (p) => p.status === "sold" ? "Продано" : p.status === "reserved" ? "В брони" : "";
 
   $("footerTg").href = tgLink("Здравствуйте! У меня вопрос про архив Shantisa.");
 
-  const left = items.filter((p) => p.status !== "sold").length;
+  const left = items.reduce((n, p) => n + p.variants.filter((v) => v.status !== "sold").length, 0);
   const minPrice = Math.min(...items.filter((p) => p.status !== "sold" && p.price).map((p) => p.price));
   $("facts").innerHTML =
     `<li><b>${left}</b> в наличии</li>` +
@@ -250,7 +263,7 @@
   });
   function drawSizes() {
     const pool = items.filter((p) => state.cat === "all" || p.category === state.cat);
-    const sizes = [...new Set(pool.map((p) => p.size))]
+    const sizes = [...new Set(pool.flatMap(sizesOf))]
       .sort((a, b) => sizeKey(a) - sizeKey(b) || a.localeCompare(b, "ru", { numeric: true }));
     $("chips").innerHTML = ["all", ...sizes].map((s) =>
       `<button class="chip" type="button" data-size="${esc(s)}" aria-pressed="${s === state.size}">${s === "all" ? "Все" : esc(s)}</button>`).join("");
@@ -272,14 +285,14 @@
     const rank = { available: 0, reserved: 1, sold: 2 };
     const list = items
       .filter((p) => state.cat === "all" || p.category === state.cat)
-      .filter((p) => state.size === "all" || p.size === state.size)
+      .filter((p) => state.size === "all" || p.variants.some((v) => v.size === state.size && !(state.hideSold && v.status === "sold")))
       .filter((p) => !(state.hideSold && p.status === "sold"))
       .sort((a, b) => rank[a.status] - rank[b.status]);
     $("grid").innerHTML = list.length ? list.map((p, i) => `
-      <button class="card ${p.status}" type="button" data-id="${esc(p.id)}" aria-label="${esc(p.name)}, ${esc(p.size)}, ${rub(p.price)}${tagFor(p) ? ", " + tagFor(p) : ""}">
+      <button class="card ${p.status}" type="button" data-id="${esc(p.id)}" aria-label="${esc(p.name)}, размеры ${sizesOf(p).join(", ")}, ${rub(p.price)}${tagFor(p) ? ", " + tagFor(p) : ""}">
         <div class="ph">${photo(p.photos[0], p.name, i < 4)}${tagFor(p) ? `<span class="tag">${tagFor(p)}</span>` : ""}</div>
         <div class="meta">
-          <div class="row"><span class="name">${esc(p.name)}</span><span class="size">${esc(p.size)}</span></div>
+          <div class="row"><span class="name">${esc(p.name)}</span><span class="size">${sizeLine(p)}</span></div>
           <span class="sub">${esc(p.color)}</span>
           <span class="price">${rub(p.price)}${p.old_price ? `<span class="old">${rub(p.old_price)}</span>` : ""}</span>
         </div>
@@ -287,8 +300,16 @@
       : `<p class="empty">В этом размере ничего не осталось. Напишите менеджеру — подскажем похожее.</p>`;
   }
 
-  function open(p) {
+  function open(p, pick) {
     const m = p.measures || {};
+    const chosen = p.variants.find((v) => v.id === pick) || p.variants.find((v) => v.status === "available") || p.variants[0];
+    const sizeChips = sizesOf(p).map((sz) => {
+      const vs = p.variants.filter((v) => v.size === sz);
+      const free = vs.filter((v) => v.status === "available");
+      const v = free[0] || vs.find((x) => x.status === "reserved") || vs[0];
+      const label = esc(sz) + (free.length > 1 ? ` <small>×${free.length}</small>` : "");
+      return `<button type="button" class="szchip ${v.status}" data-v="${v.id}" aria-pressed="${v.id === chosen.id}">${label}</button>`;
+    }).join("");
     const cell = (v) => v ? `${v}<small>см</small>` : "—";
     const shots = p.photos.length ? p.photos : [null];
     $("sheet").innerHTML = `
@@ -297,10 +318,10 @@
         ${shots.length > 1 ? `<div class="dots" id="dots">${shots.map((_, i) => `<i class="${i ? "" : "on"}"></i>`).join("")}</div>` : ""}
       </div>
       <div class="info">
-        <div><div class="id">${esc(p.id)}${tagFor(p) ? " · " + tagFor(p) : ""}</div><h3 id="dlgTitle">${esc(p.name)}</h3></div>
+        <div><div class="id" id="dlgId"></div><h3 id="dlgTitle">${esc(p.name)}</h3></div>
         <div class="price">${rub(p.price)}${p.old_price ? `<span class="old">${rub(p.old_price)}</span>` : ""}</div>
+        <div class="sizes" id="sizes"><span class="spec-label">Размер</span>${sizeChips}</div>
         <dl class="spec">
-          <dt>Размер</dt><dd>${esc(p.size)}</dd>
           <dt>Цвет</dt><dd>${esc(p.color)}</dd>
           ${p.fabric ? `<dt>Состав</dt><dd>${esc(p.fabric)}</dd>` : ""}
           ${p.condition ? `<dt>Состояние</dt><dd>${esc(p.condition)}</dd>` : ""}
@@ -311,18 +332,28 @@
         </table>
         <p class="hint">Обхваты по изделию: по плоскости ×2.</p>` : `<p class="hint">Размер указан по бирке. Сомневаетесь в посадке — спросите менеджера, он подскажет по конкретной вещи.</p>`}
         ${p.note ? `<p class="note">${esc(p.note)}</p>` : ""}
-        <a class="order" href="${p.status === "sold" ? "#" : tgLink(orderText(p))}" target="_blank" rel="noopener"
-           ${p.status === "sold" ? 'aria-disabled="true"' : ""}>
-          ${p.status === "sold" ? "Уже продано" : p.status === "reserved" ? "Спросить, освободится ли" : "Заказать у менеджера"}
-        </a>
+        <a class="order" id="orderBtn" target="_blank" rel="noopener"></a>
       </div>`;
+    const setVariant = (v) => {
+      $("dlgId").textContent = v.id + (v.status === "sold" ? " · Продано" : v.status === "reserved" ? " · В брони" : "");
+      const btn = $("orderBtn");
+      btn.href = v.status === "sold" ? "#" : tgLink(orderText(p, v));
+      btn.setAttribute("aria-disabled", v.status === "sold");
+      btn.textContent = v.status === "sold" ? "Этот размер продан" : v.status === "reserved" ? "Спросить, освободится ли" : "Заказать у менеджера";
+      $("sizes").querySelectorAll(".szchip").forEach((c) => c.setAttribute("aria-pressed", c.dataset.v === v.id));
+      history.replaceState(null, "", "#" + v.id);
+    };
+    $("sizes").addEventListener("click", (e) => {
+      const c = e.target.closest(".szchip"); if (!c) return;
+      setVariant(p.variants.find((v) => v.id === c.dataset.v));
+    });
+    setVariant(chosen);
     const gal = $("gal"), dots = $("dots");
     if (dots) gal.addEventListener("scroll", () => {
       const k = Math.round(gal.scrollLeft / gal.clientWidth);
       dots.querySelectorAll("i").forEach((d, i) => d.classList.toggle("on", i === k));
     }, { passive: true });
     $("dlg").showModal();
-    history.replaceState(null, "", "#" + p.id);
   }
 
   $("grid").addEventListener("click", (e) => {
@@ -335,8 +366,9 @@
 
   render();
   // Прямая ссылка на платье: .../#SH-07 — удобно отправлять в переписке.
-  const direct = items.find((p) => "#" + p.id === decodeURIComponent(location.hash));
-  if (direct) open(direct);
+  const want = decodeURIComponent(location.hash).slice(1);
+  const direct = items.find((p) => p.variants.some((v) => v.id === want));
+  if (direct) open(direct, want);
 })();
 </script>
 </body>
