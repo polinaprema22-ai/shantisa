@@ -129,9 +129,21 @@
   .gallery > * { flex: 0 0 100%; scroll-snap-align: start; aspect-ratio: 9 / 16; }
   .gallery img { width: 100%; height: 100%; object-fit: cover; }
   .gallery .none { display: grid; place-items: center; font: 400 28px var(--display); color: var(--muted); }
-  .dots { display: flex; justify-content: center; gap: 6px; padding-block: 10px 0; }
-  .dots i { width: 6px; height: 6px; border-radius: 3px; background: var(--line); }
-  .dots i.on { background: var(--ink); }
+  .galwrap { position: relative; }
+  .arrow {
+    position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border: 0; border-radius: 20px;
+    background: rgba(255,255,255,.85); color: var(--ink); font-size: 22px; line-height: 1; cursor: pointer; z-index: 1;
+    display: grid; place-items: center; box-shadow: 0 1px 4px rgba(0,0,0,.15);
+  }
+  .arrow.prev { left: 10px; } .arrow.next { right: 10px; }
+  .arrow[disabled] { opacity: 0; pointer-events: none; }
+  .counter { position: absolute; right: 12px; bottom: 12px; z-index: 1; padding: 3px 9px; font-size: 12px; font-weight: 600;
+             letter-spacing: .06em; background: rgba(255,255,255,.85); color: var(--ink); font-variant-numeric: tabular-nums; }
+  .thumbs { display: flex; gap: 6px; padding: 10px 12px 0; overflow-x: auto; scrollbar-width: none; }
+  .thumbs::-webkit-scrollbar { display: none; }
+  .thumbs button { flex: none; width: 54px; aspect-ratio: 9 / 16; padding: 0; border: 2px solid transparent; background: var(--photo); cursor: pointer; overflow: hidden; }
+  .thumbs button img { width: 100%; height: 100%; object-fit: cover; }
+  .thumbs button[aria-current="true"] { border-color: var(--accent); }
   .info { padding: 24px 22px 28px; display: grid; gap: 18px; align-content: start; }
   .info .id { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
   .info h3 { margin: 4px 0 0; font: 400 26px/1.2 var(--display); text-wrap: balance; }
@@ -307,8 +319,13 @@
     const shots = p.photos.length ? p.photos : [null];
     $("sheet").innerHTML = `
       <div>
-        <div class="gallery" id="gal">${shots.map((s, i) => photo(s, p.name + " — фото " + (i + 1), true)).join("")}</div>
-        ${shots.length > 1 ? `<div class="dots" id="dots">${shots.map((_, i) => `<i class="${i ? "" : "on"}"></i>`).join("")}</div>` : ""}
+        <div class="galwrap">
+          <div class="gallery" id="gal">${shots.map((s, i) => photo(s, p.name + " — фото " + (i + 1), true)).join("")}</div>
+          ${shots.length > 1 ? `<button class="arrow prev" id="galPrev" type="button" aria-label="Предыдущее фото">‹</button>
+          <button class="arrow next" id="galNext" type="button" aria-label="Следующее фото">›</button>
+          <span class="counter" id="galCount">1 / ${shots.length}</span>` : ""}
+        </div>
+        ${shots.length > 1 ? `<div class="thumbs" id="thumbs">${shots.map((s, i) => `<button type="button" data-i="${i}" aria-current="${i === 0}" aria-label="Фото ${i + 1}"><img src="${esc(s)}" alt="" loading="lazy"></button>`).join("")}</div>` : ""}
       </div>
       <div class="info">
         <div><div class="id" id="dlgId"></div><h3 id="dlgTitle">${esc(p.name)}</h3></div>
@@ -341,11 +358,24 @@
       setVariant(p.variants.find((v) => v.id === c.dataset.v));
     });
     setVariant(chosen);
-    const gal = $("gal"), dots = $("dots");
-    if (dots) gal.addEventListener("scroll", () => {
-      const k = Math.round(gal.scrollLeft / gal.clientWidth);
-      dots.querySelectorAll("i").forEach((d, i) => d.classList.toggle("on", i === k));
-    }, { passive: true });
+    const gal = $("gal");
+    if (shots.length > 1) {
+      const n = shots.length;
+      const cur = () => Math.round(gal.scrollLeft / gal.clientWidth);
+      const go = (i) => gal.scrollTo({ left: Math.max(0, Math.min(n - 1, i)) * gal.clientWidth, behavior: "smooth" });
+      const sync = () => {
+        const k = cur();
+        $("galCount").textContent = (k + 1) + " / " + n;
+        $("galPrev").disabled = k === 0; $("galNext").disabled = k === n - 1;
+        $("thumbs").querySelectorAll("button").forEach((b, i) => b.setAttribute("aria-current", i === k));
+      };
+      gal.addEventListener("scroll", sync, { passive: true });
+      $("galPrev").addEventListener("click", () => go(cur() - 1));
+      $("galNext").addEventListener("click", () => go(cur() + 1));
+      $("thumbs").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) go(+b.dataset.i); });
+      $("dlg").onkeydown = (e) => { if (e.key === "ArrowLeft") go(cur() - 1); if (e.key === "ArrowRight") go(cur() + 1); };
+      sync();
+    }
     $("dlg").showModal();
   }
 
