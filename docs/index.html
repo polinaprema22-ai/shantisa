@@ -175,8 +175,7 @@
     <img class="logo" src="logo.png" alt="Shantisa by Mila Tumanova" width="650" height="174">
     <p class="tagline">Мы не создаём платья — мы создаём состояния</p>
     <h1>Архив Shantisa. Последние вещи, созданные <em>Милой Тумановой</em>.</h1>
-    <p class="lede">Здесь всё, что осталось от бренда: платья, топы, юбки и немного детского. Каждая вещь в одном экземпляре, повторов не будет. Выберите вещь, нажмите «Заказать» — менеджер ответит в Telegram и всё оформит.</p>
-    <ul class="facts" id="facts"></ul>
+    <p class="lede">Каждая вещь в одном экземпляре, повторов не будет. Выберите вещь, нажмите «Заказать» — менеджер ответит в Telegram и всё оформит.</p>
   </header>
 
   <div class="bar" role="toolbar" aria-label="Фильтр">
@@ -243,12 +242,6 @@
 
   $("footerTg").href = tgLink("Здравствуйте! У меня вопрос про архив Shantisa.");
 
-  const left = items.reduce((n, p) => n + p.variants.filter((v) => v.status !== "sold").length, 0);
-  const minPrice = Math.min(...items.filter((p) => p.status !== "sold" && p.price).map((p) => p.price));
-  $("facts").innerHTML =
-    `<li><b>${left}</b> в наличии</li>` +
-    (isFinite(minPrice) ? `<li>от <b>${rub(minPrice)}</b></li>` : "") +
-    `<li>СДЭК · курьер · самовывоз</li>`;
 
   const sizeKey = (a) => { if (/лет/i.test(a)) return 200; const i = SIZE_ORDER.indexOf(a); return i < 0 ? 99 : i; };
   const cats = [...new Set(items.map((p) => p.category).filter(Boolean))]
