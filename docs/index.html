@@ -193,7 +193,7 @@
       <div><dt>Курьер по городу</dt><dd>Яндекс Доставка в день заказа, оплата курьеру по факту.</dd></div>
       <div><dt>Самовывоз</dt><dd>Бесплатно, по договорённости — можно примерить на месте.</dd></div>
       <div><dt>Если не подошёл размер</dt><dd>Вернём деньги в течение 7 дней после получения, если сохранены вид и бирки. Обратная пересылка — за счёт покупательницы.</dd></div>
-      <div><dt>Замеры</dt><dd>Сняты по изделию, по плоскости ×2, в сантиметрах. Сверяйте со своей любимой вещью — это надёжнее размера на бирке.</dd></div>
+      <div><dt>Размеры</dt><dd>Указаны по бирке, российская сетка (42, 44, 46…). Если сомневаетесь в посадке, спросите менеджера — он посмотрит вещь и подскажет.</dd></div>
     </dl>
   </section>
 
@@ -302,14 +302,14 @@
         <dl class="spec">
           <dt>Размер</dt><dd>${esc(p.size)}</dd>
           <dt>Цвет</dt><dd>${esc(p.color)}</dd>
-          <dt>Состав</dt><dd>${esc(p.fabric) || "—"}</dd>
-          <dt>Состояние</dt><dd>${esc(p.condition)}</dd>
+          ${p.fabric ? `<dt>Состав</dt><dd>${esc(p.fabric)}</dd>` : ""}
+          ${p.condition ? `<dt>Состояние</dt><dd>${esc(p.condition)}</dd>` : ""}
         </dl>
-        <table class="measures">
+        ${Object.values(m).some(Boolean) ? `<table class="measures">
           <thead><tr><th>Грудь</th><th>Талия</th><th>Бёдра</th><th>Длина</th></tr></thead>
           <tbody><tr><td>${cell(m.bust)}</td><td>${cell(m.waist)}</td><td>${cell(m.hips)}</td><td>${cell(m.length)}</td></tr></tbody>
         </table>
-        <p class="hint">Обхваты по изделию: по плоскости ×2.</p>
+        <p class="hint">Обхваты по изделию: по плоскости ×2.</p>` : `<p class="hint">Размер указан по бирке. Сомневаетесь в посадке — спросите менеджера, он подскажет по конкретной вещи.</p>`}
         ${p.note ? `<p class="note">${esc(p.note)}</p>` : ""}
         <a class="order" href="${p.status === "sold" ? "#" : tgLink(orderText(p))}" target="_blank" rel="noopener"
            ${p.status === "sold" ? 'aria-disabled="true"' : ""}>
