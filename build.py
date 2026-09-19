@@ -44,6 +44,7 @@ def main():
                 "id": pid,
                 "model": (row.get("model") or "").strip(),
                 "category": (row.get("category") or "").strip(),
+                "title": (row.get("title") or "").strip(),
                 "name": row["name"].strip(),
                 "color": row["color"].strip(),
                 "size": row["size"].strip().upper(),

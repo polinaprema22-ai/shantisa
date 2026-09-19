@@ -146,7 +146,8 @@
   .thumbs button[aria-current="true"] { border-color: var(--accent); }
   .info { padding: 24px 22px 28px; display: grid; gap: 18px; align-content: start; }
   .info .id { font-size: 13px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--taupe); }
-  .info h3 { margin: 4px 0 0; font: 400 26px/1.2 var(--display); text-wrap: balance; }
+  .info h3 { margin: 4px 0 0; font: 400 28px/1.2 var(--display); text-wrap: balance; }
+  .info .desc { margin: 6px 0 0; color: var(--muted); font-size: 17px; font-style: italic; }
   .info .price { font-size: 22px; color: var(--accent); }
   .spec { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 8px 18px; font-size: 17px; }
   .spec dt { color: var(--muted); }
@@ -245,8 +246,8 @@
   const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const tgLink = (text) => "https://t.me/" + MANAGER + (text ? "?text=" + encodeURIComponent(text) : "");
   const orderText = (p, v) => v.status === "reserved"
-    ? `Здравствуйте! ${v.id} «${p.name}» (${v.size}) сейчас в брони — подскажите, если освободится?`
-    : `Здравствуйте! Хочу ${v.id} «${p.name}», ${p.color}, размер ${v.size}.`;
+    ? `Здравствуйте! ${v.id} «${p.title || p.name}» (${v.size}) сейчас в брони — подскажите, если освободится?`
+    : `Здравствуйте! Хочу ${v.id} «${p.title || p.name}», ${p.color}, размер ${v.size}.`;
   const sizesOf = (p) => [...new Set(p.variants.map((v) => v.size))];
   const sizeLine = (p) => sizesOf(p).map((sz) =>
     p.variants.some((v) => v.size === sz && v.status !== "sold") ? esc(sz) : `<s>${esc(sz)}</s>`).join(" · ");
@@ -294,11 +295,11 @@
       .filter((p) => !(state.hideSold && p.status === "sold"))
       .sort((a, b) => rank[a.status] - rank[b.status]);
     $("grid").innerHTML = list.length ? list.map((p, i) => `
-      <button class="card ${p.status}" type="button" data-id="${esc(p.id)}" aria-label="${esc(p.name)}, размеры ${sizesOf(p).join(", ")}, ${rub(p.price)}${tagFor(p) ? ", " + tagFor(p) : ""}">
+      <button class="card ${p.status}" type="button" data-id="${esc(p.id)}" aria-label="${esc(p.title || p.name)}, размеры ${sizesOf(p).join(", ")}, ${rub(p.price)}${tagFor(p) ? ", " + tagFor(p) : ""}">
         <div class="ph">${photo(p.photos[0], p.name, i < 4)}${tagFor(p) ? `<span class="tag">${tagFor(p)}</span>` : ""}</div>
         <div class="meta">
-          <div class="row"><span class="name">${esc(p.name)}</span><span class="size">${sizeLine(p)}</span></div>
-          <span class="sub">${esc(p.color)}</span>
+          <div class="row"><span class="name">${esc(p.title || p.name)}</span><span class="size">${sizeLine(p)}</span></div>
+          <span class="sub">${esc(p.title ? p.name : p.color)}</span>
           <span class="price">${rub(p.price)}${p.old_price ? `<span class="old">${rub(p.old_price)}</span>` : ""}</span>
         </div>
       </button>`).join("")
@@ -328,7 +329,7 @@
         ${shots.length > 1 ? `<div class="thumbs" id="thumbs">${shots.map((s, i) => `<button type="button" data-i="${i}" aria-current="${i === 0}" aria-label="Фото ${i + 1}"><img src="${esc(s)}" alt="" loading="lazy"></button>`).join("")}</div>` : ""}
       </div>
       <div class="info">
-        <div><div class="id" id="dlgId"></div><h3 id="dlgTitle">${esc(p.name)}</h3></div>
+        <div><div class="id" id="dlgId"></div><h3 id="dlgTitle">${esc(p.title || p.name)}</h3>${p.title ? `<p class="desc">${esc(p.name)}</p>` : ""}</div>
         <div class="price">${rub(p.price)}${p.old_price ? `<span class="old">${rub(p.old_price)}</span>` : ""}</div>
         <div class="sizes" id="sizes"><span class="spec-label">Размер</span>${sizeChips}</div>
         <dl class="spec">
