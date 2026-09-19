@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Архив Shantisa</title>
+<meta name="description" content="Архив Shantisa — последние вещи, созданные Милой Тумановой: платья, топы, юбки и детское. Каждая — в единственном экземпляре.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap">
+<style>
+  /* Палитра и шрифты взяты с shantisa.ru (тема сайта 2018): один светлый образ, как у бренда */
+  :root {
+    --ground: #FFFFFF;
+    --surface: #F8F8F8;
+    --ink: #141414;
+    --muted: #767676;
+    --taupe: #A59189;
+    --line: #E5E5E5;
+    --accent: #E40146;
+    --accent-ink: #FFFFFF;
+    --gold: #F1C045;
+    --photo: #F2EDE9;
+    --shade: rgba(20, 20, 20, .6);
+    --display: "Abril Fatface", "Didot", "Bodoni 72", Georgia, serif;
+    --body: "Roboto", -apple-system, "Segoe UI", Arial, sans-serif;
+    color-scheme: light;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font: 400 16px/1.55 var(--body);
+    padding: env(safe-area-inset-top, 0px) max(16px, env(safe-area-inset-right, 0px)) env(safe-area-inset-bottom, 0px) max(16px, env(safe-area-inset-left, 0px));
+  }
+  img { max-width: 100%; display: block; }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .wrap { max-width: 1120px; margin: 0 auto; }
+
+  /* Шапка */
+  header.top { padding-block: 36px 28px; display: grid; gap: 22px; justify-items: center; text-align: center; }
+  .logo { width: min(320px, 70vw); height: auto; }
+  .tagline { margin: -10px 0 0; font-style: italic; color: var(--taupe); font-size: 15px; }
+  h1 {
+    margin: 0; font: 400 clamp(34px, 6.5vw, 60px)/1.08 var(--display);
+    letter-spacing: 0; text-wrap: balance;
+  }
+  h1 em { font-style: normal; color: var(--accent); }
+  .lede { margin: 0; max-width: 60ch; color: var(--muted); font-size: 17px; }
+  .facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; margin: 0; padding: 0; list-style: none;
+           font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--taupe); }
+  .facts b { color: var(--ink); font-weight: 600; }
+
+  /* Фильтр */
+  .bar {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+    background: var(--ground); border-bottom: 1px solid var(--line);
+    padding-block: 12px; display: flex; align-items: center; gap: 12px;
+  }
+  .bar2 { top: calc(env(safe-area-inset-top, 0px) + 61px); border-bottom: 1px solid var(--line); }
+  #cats .chip { font-size: 12px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; border-radius: 0; }
+  .bar-label { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); flex: none; }
+  .chips { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; min-width: 0; }
+  .chips::-webkit-scrollbar { display: none; }
+  .chip {
+    flex: none; min-width: 44px; height: 36px; padding: 0 14px; border-radius: 18px;
+    border: 1px solid var(--line); background: transparent; cursor: pointer; font-size: 14px; font-weight: 500;
+  }
+  .chip[aria-pressed="true"] { background: var(--ink); color: var(--ground); border-color: var(--ink); }
+  #cats .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); }
+  .hide-sold { margin-left: auto; flex: none; display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); cursor: pointer; }
+  .hide-sold input { accent-color: var(--accent); width: 16px; height: 16px; margin: 0; }
+
+  /* Каталог */
+  .grid {
+    display: grid; gap: 28px 14px; padding-block: 24px 56px;
+    grid-template-columns: repeat(auto-fill, minmax(min(160px, 42vw), 1fr));
+  }
+  @media (min-width: 720px) { .grid { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 40px 22px; } }
+  .card { display: grid; gap: 10px; align-content: start; background: none; border: 0; padding: 0; text-align: left; cursor: pointer; }
+  .ph { position: relative; aspect-ratio: 3 / 4; background: var(--photo); overflow: hidden; }
+  .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+  .card:hover .ph img { transform: scale(1.025); }
+  .ph .none { position: absolute; inset: 0; display: grid; place-items: center; font: 400 22px var(--display); color: var(--muted); }
+  .tag {
+    position: absolute; left: 8px; top: 8px; padding: 4px 9px; font-size: 11px; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase; background: var(--ink); color: var(--ground);
+  }
+  .card.reserved .tag { background: var(--gold); color: var(--ink); }
+  .card.sold .ph img, .card.sold .ph .none { filter: grayscale(1); opacity: .45; }
+  .card.sold .meta { opacity: .55; }
+  .meta { display: grid; gap: 2px; }
+  .meta .row { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+  .name { font-size: 15px; font-weight: 500; line-height: 1.3; }
+  .size { flex: none; font-size: 13px; font-weight: 600; letter-spacing: .04em; }
+  .sub { font-size: 13px; color: var(--muted); }
+  .price { font-variant-numeric: tabular-nums; font-size: 15px; font-weight: 700; }
+  .old { color: var(--muted); text-decoration: line-through; font-weight: 400; margin-left: 6px; font-size: 13px; }
+  .empty { grid-column: 1 / -1; color: var(--muted); padding-block: 40px; }
+
+  /* Как купить */
+  section.how { border-top: 1px solid var(--line); padding-block: 48px; display: grid; gap: 28px; }
+  h2 { margin: 0; font: 400 clamp(28px, 4.5vw, 40px)/1.1 var(--display); text-wrap: balance; }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px;
+           grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); counter-reset: s; }
+  .steps li { counter-increment: s; display: grid; gap: 6px; max-width: 34ch; }
+  .steps li::before { content: counter(s); font: 400 30px/1 var(--display); color: var(--accent); }
+  .steps b { font-weight: 600; }
+  .steps span { color: var(--muted); font-size: 15px; }
+  .terms { display: grid; gap: 10px 32px; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+           margin: 0; font-size: 15px; }
+  .terms dt { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .terms dd { margin: 2px 0 12px; }
+  footer { border-top: 1px solid var(--line); padding-block: 24px 40px; color: var(--muted); font-size: 13px;
+           display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+
+  /* Окно платья */
+  dialog {
+    border: 0; padding: 0; max-width: 980px; width: calc(100% - 32px); max-height: calc(100dvh - 32px);
+    background: var(--surface); color: var(--ink); overflow: auto;
+  }
+  dialog::backdrop { background: var(--shade); }
+  .sheet { display: grid; gap: 0; }
+  @media (min-width: 760px) { .sheet { grid-template-columns: 1.1fr 1fr; } }
+  .gallery { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; background: var(--photo); scrollbar-width: thin; }
+  .gallery > * { flex: 0 0 100%; scroll-snap-align: start; aspect-ratio: 3 / 4; }
+  .gallery img { width: 100%; height: 100%; object-fit: cover; }
+  .gallery .none { display: grid; place-items: center; font: 400 28px var(--display); color: var(--muted); }
+  .dots { display: flex; justify-content: center; gap: 6px; padding-block: 10px 0; }
+  .dots i { width: 6px; height: 6px; border-radius: 3px; background: var(--line); }
+  .dots i.on { background: var(--ink); }
+  .info { padding: 24px 22px 28px; display: grid; gap: 18px; align-content: start; }
+  .info .id { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .info h3 { margin: 4px 0 0; font: 400 26px/1.2 var(--display); text-wrap: balance; }
+  .info .price { font-size: 22px; color: var(--accent); }
+  .spec { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 8px 18px; font-size: 15px; }
+  .spec dt { color: var(--muted); }
+  .spec dd { margin: 0; }
+  .measures { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; font-size: 15px; }
+  .measures th { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); text-align: left; padding: 0 0 6px; }
+  .measures td { border-top: 1px solid var(--line); padding: 8px 0; font-size: 18px; }
+  .measures td small { font-size: 12px; color: var(--muted); margin-left: 2px; }
+  .hint { font-size: 13px; color: var(--muted); margin: -8px 0 0; }
+  .order {
+    display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 22px;
+    background: var(--accent); color: var(--accent-ink); text-decoration: none; font-weight: 600; font-size: 16px;
+  }
+  .order:hover { filter: brightness(1.08); }
+  .order[aria-disabled="true"] { background: var(--line); color: var(--muted); pointer-events: none; }
+  .close {
+    position: sticky; top: 0; float: right; z-index: 2; margin: 10px 10px -46px 0; width: 36px; height: 36px;
+    border: 0; border-radius: 18px; background: var(--surface); cursor: pointer; font-size: 20px; line-height: 1;
+  }
+  .note { font-size: 14px; color: var(--muted); border-left: 2px solid var(--line); padding-left: 12px; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <img class="logo" src="logo.png" alt="Shantisa by Mila Tumanova" width="650" height="174">
+    <p class="tagline">Мы не создаём платья — мы создаём состояния</p>
+    <h1>Архив Shantisa. <em>Последние вещи,</em> созданные Милой Тумановой.</h1>
+    <p class="lede">Здесь всё, что осталось от бренда: платья, топы, юбки и немного детского. Каждая вещь в одном экземпляре, повторов не будет. Выберите вещь, нажмите «Заказать» — менеджер ответит в Telegram и всё оформит.</p>
+    <ul class="facts" id="facts"></ul>
+  </header>
+
+  <div class="bar" role="toolbar" aria-label="Фильтр">
+    <div class="chips" id="cats"></div>
+  </div>
+  <div class="bar bar2" role="toolbar" aria-label="Фильтр по размеру">
+    <span class="bar-label">Размер</span>
+    <div class="chips" id="chips"></div>
+    <label class="hide-sold" for="hideSold"><input type="checkbox" id="hideSold"> скрыть проданное</label>
+  </div>
+
+  <main class="grid" id="grid" aria-live="polite"></main>
+
+  <section class="how" id="how">
+    <h2>Как купить</h2>
+    <ol class="steps">
+      <li><b>Напишите менеджеру</b><span>Кнопка «Заказать» в карточке вещи откроет Telegram с уже написанным артикулом.</span></li>
+      <li><b>Бронь на 24 часа</b><span>Менеджер подтвердит наличие, ответит про посадку и посчитает доставку.</span></li>
+      <li><b>Оплата переводом по СБП</b><span>Пришлём ссылку на перевод с точной суммой. Реквизиты — только в переписке.</span></li>
+      <li><b>Отправка и трек-номер</b><span>Отправляем в течение 2 дней после оплаты и присылаем трек.</span></li>
+    </ol>
+    <dl class="terms">
+      <div><dt>СДЭК</dt><dd>До пункта выдачи по России, 2–7 дней. Стоимость по тарифу СДЭК добавляем к переводу.</dd></div>
+      <div><dt>Курьер по городу</dt><dd>Яндекс Доставка в день заказа, оплата курьеру по факту.</dd></div>
+      <div><dt>Самовывоз</dt><dd>Бесплатно, по договорённости — можно примерить на месте.</dd></div>
+      <div><dt>Если не подошёл размер</dt><dd>Вернём деньги в течение 7 дней после получения, если сохранены вид и бирки. Обратная пересылка — за счёт покупательницы.</dd></div>
+      <div><dt>Замеры</dt><dd>Сняты по изделию, по плоскости ×2, в сантиметрах. Сверяйте со своей любимой вещью — это надёжнее размера на бирке.</dd></div>
+    </dl>
+  </section>
+
+  <footer>
+    <span>Личный архив бренда Shantisa by Mila Tumanova</span>
+    <a id="footerTg" href="#" style="color: inherit">Написать менеджеру</a>
+  </footer>
+</div>
+
+<dialog id="dlg" aria-labelledby="dlgTitle">
+  <button class="close" id="dlgClose" aria-label="Закрыть">×</button>
+  <div class="sheet" id="sheet"></div>
+</dialog>
+
+<script>
+  // Telegram-ник менеджера, без @. Заменить перед публикацией.
+  const MANAGER = "QqoldGM";
+</script>
+<script src="products.js"></script>
+<script>
+(function () {
+  const items = window.PRODUCTS || [];
+  const SIZE_ORDER = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "ONE SIZE"];
+  const state = { cat: "all", size: "all", hideSold: false };
+  const CAT_ORDER = ["Платья", "Топы", "Юбки", "Детское"];
+  const $ = (id) => document.getElementById(id);
+  const rub = (n) => n == null ? "" : n.toLocaleString("ru-RU") + " ₽";
+  const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const tgLink = (text) => "https://t.me/" + MANAGER + (text ? "?text=" + encodeURIComponent(text) : "");
+  const orderText = (p) => p.status === "reserved"
+    ? `Здравствуйте! ${p.id} «${p.name}» (${p.size}) сейчас в брони — подскажите, если освободится?`
+    : `Здравствуйте! Хочу ${p.id} «${p.name}», ${p.color}, размер ${p.size}.`;
+  const tagFor = (p) => p.status === "sold" ? "Продано" : p.status === "reserved" ? "В брони" : "";
+
+  $("footerTg").href = tgLink("Здравствуйте! У меня вопрос про архив Shantisa.");
+
+  const left = items.filter((p) => p.status !== "sold").length;
+  const minPrice = Math.min(...items.filter((p) => p.status !== "sold" && p.price).map((p) => p.price));
+  $("facts").innerHTML =
+    `<li><b>${left}</b> в наличии</li>` +
+    (isFinite(minPrice) ? `<li>от <b>${rub(minPrice)}</b></li>` : "") +
+    `<li>СДЭК · курьер · самовывоз</li>`;
+
+  const sizeKey = (a) => { if (/лет/i.test(a)) return 200; const i = SIZE_ORDER.indexOf(a); return i < 0 ? 99 : i; };
+  const cats = [...new Set(items.map((p) => p.category).filter(Boolean))]
+    .sort((a, b) => (CAT_ORDER.indexOf(a) + 1 || 99) - (CAT_ORDER.indexOf(b) + 1 || 99));
+  $("cats").innerHTML = ["all", ...cats].map((c) =>
+    `<button class="chip" type="button" data-cat="${esc(c)}" aria-pressed="${c === state.cat}">${c === "all" ? "Всё" : esc(c)}</button>`).join("");
+  $("cats").addEventListener("click", (e) => {
+    const b = e.target.closest(".chip"); if (!b) return;
+    state.cat = b.dataset.cat; state.size = "all";
+    $("cats").querySelectorAll(".chip").forEach((c) => c.setAttribute("aria-pressed", c === b));
+    drawSizes(); render();
+  });
+  function drawSizes() {
+    const pool = items.filter((p) => state.cat === "all" || p.category === state.cat);
+    const sizes = [...new Set(pool.map((p) => p.size))]
+      .sort((a, b) => sizeKey(a) - sizeKey(b) || a.localeCompare(b, "ru", { numeric: true }));
+    $("chips").innerHTML = ["all", ...sizes].map((s) =>
+      `<button class="chip" type="button" data-size="${esc(s)}" aria-pressed="${s === state.size}">${s === "all" ? "Все" : esc(s)}</button>`).join("");
+  }
+  drawSizes();
+  $("chips").addEventListener("click", (e) => {
+    const b = e.target.closest(".chip"); if (!b) return;
+    state.size = b.dataset.size;
+    $("chips").querySelectorAll(".chip").forEach((c) => c.setAttribute("aria-pressed", c === b));
+    render();
+  });
+  $("hideSold").addEventListener("change", (e) => { state.hideSold = e.target.checked; render(); });
+
+  const photo = (src, alt, eager) => src
+    ? `<img src="${esc(src)}" alt="${esc(alt)}" ${eager ? "" : 'loading="lazy"'} decoding="async" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'none',textContent:'фото скоро'}))">`
+    : `<div class="none">фото скоро</div>`;
+
+  function render() {
+    const rank = { available: 0, reserved: 1, sold: 2 };
+    const list = items
+      .filter((p) => state.cat === "all" || p.category === state.cat)
+      .filter((p) => state.size === "all" || p.size === state.size)
+      .filter((p) => !(state.hideSold && p.status === "sold"))
+      .sort((a, b) => rank[a.status] - rank[b.status]);
+    $("grid").innerHTML = list.length ? list.map((p, i) => `
+      <button class="card ${p.status}" type="button" data-id="${esc(p.id)}" aria-label="${esc(p.name)}, ${esc(p.size)}, ${rub(p.price)}${tagFor(p) ? ", " + tagFor(p) : ""}">
+        <div class="ph">${photo(p.photos[0], p.name, i < 4)}${tagFor(p) ? `<span class="tag">${tagFor(p)}</span>` : ""}</div>
+        <div class="meta">
+          <div class="row"><span class="name">${esc(p.name)}</span><span class="size">${esc(p.size)}</span></div>
+          <span class="sub">${esc(p.color)}</span>
+          <span class="price">${rub(p.price)}${p.old_price ? `<span class="old">${rub(p.old_price)}</span>` : ""}</span>
+        </div>
+      </button>`).join("")
+      : `<p class="empty">В этом размере ничего не осталось. Напишите менеджеру — подскажем похожее.</p>`;
+  }
+
+  function open(p) {
+    const m = p.measures || {};
+    const cell = (v) => v ? `${v}<small>см</small>` : "—";
+    const shots = p.photos.length ? p.photos : [null];
+    $("sheet").innerHTML = `
+      <div>
+        <div class="gallery" id="gal">${shots.map((s, i) => photo(s, p.name + " — фото " + (i + 1), true)).join("")}</div>
+        ${shots.length > 1 ? `<div class="dots" id="dots">${shots.map((_, i) => `<i class="${i ? "" : "on"}"></i>`).join("")}</div>` : ""}
+      </div>
+      <div class="info">
+        <div><div class="id">${esc(p.id)}${tagFor(p) ? " · " + tagFor(p) : ""}</div><h3 id="dlgTitle">${esc(p.name)}</h3></div>
+        <div class="price">${rub(p.price)}${p.old_price ? `<span class="old">${rub(p.old_price)}</span>` : ""}</div>
+        <dl class="spec">
+          <dt>Размер</dt><dd>${esc(p.size)}</dd>
+          <dt>Цвет</dt><dd>${esc(p.color)}</dd>
+          <dt>Состав</dt><dd>${esc(p.fabric) || "—"}</dd>
+          <dt>Состояние</dt><dd>${esc(p.condition)}</dd>
+        </dl>
+        <table class="measures">
+          <thead><tr><th>Грудь</th><th>Талия</th><th>Бёдра</th><th>Длина</th></tr></thead>
+          <tbody><tr><td>${cell(m.bust)}</td><td>${cell(m.waist)}</td><td>${cell(m.hips)}</td><td>${cell(m.length)}</td></tr></tbody>
+        </table>
+        <p class="hint">Обхваты по изделию: по плоскости ×2.</p>
+        ${p.note ? `<p class="note">${esc(p.note)}</p>` : ""}
+        <a class="order" href="${p.status === "sold" ? "#" : tgLink(orderText(p))}" target="_blank" rel="noopener"
+           ${p.status === "sold" ? 'aria-disabled="true"' : ""}>
+          ${p.status === "sold" ? "Уже продано" : p.status === "reserved" ? "Спросить, освободится ли" : "Заказать у менеджера"}
+        </a>
+      </div>`;
+    const gal = $("gal"), dots = $("dots");
+    if (dots) gal.addEventListener("scroll", () => {
+      const k = Math.round(gal.scrollLeft / gal.clientWidth);
+      dots.querySelectorAll("i").forEach((d, i) => d.classList.toggle("on", i === k));
+    }, { passive: true });
+    $("dlg").showModal();
+    history.replaceState(null, "", "#" + p.id);
+  }
+
+  $("grid").addEventListener("click", (e) => {
+    const c = e.target.closest(".card"); if (!c) return;
+    open(items.find((p) => p.id === c.dataset.id));
+  });
+  $("dlgClose").addEventListener("click", () => $("dlg").close());
+  $("dlg").addEventListener("click", (e) => { if (e.target === $("dlg")) $("dlg").close(); });
+  $("dlg").addEventListener("close", () => history.replaceState(null, "", location.pathname));
+
+  render();
+  // Прямая ссылка на платье: .../#SH-07 — удобно отправлять в переписке.
+  const direct = items.find((p) => "#" + p.id === decodeURIComponent(location.hash));
+  if (direct) open(direct);
+})();
+</script>
+</body>
+</html>
