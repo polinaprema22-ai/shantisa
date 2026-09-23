@@ -1,3 +1,7 @@
 products.csv
 raw/
 .DS_Store
+
+# Внутренние материалы менеджера — не публикуются
+manager-templates.md
+*.pdf
