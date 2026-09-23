@@ -628,7 +628,7 @@ window.PRODUCTS = [
   "id": "SH-27",
   "category": "Юбки",
   "title": "Виши",
-  "name": "Юбка в пол, расклешённая, на пуговицах",
+  "name": "Юбка в пол, расклешённая",
   "color": "чёрно-белая клетка",
   "fabric": "",
   "measures": {
@@ -646,44 +646,19 @@ window.PRODUCTS = [
    "photos/SH-27-3.jpg",
    "photos/SH-27-4.jpg"
   ],
-  "note": "",
+  "note": "Таких юбок две, обе 42 размера: одна с пуговицами спереди до низа, вторая без пуговиц. Напишите менеджеру, какая нравится.",
   "variants": [
    {
     "id": "SH-27",
     "size": "42",
-    "status": "available"
-   }
-  ],
-  "status": "available"
- },
- {
-  "id": "SH-28",
-  "category": "Юбки",
-  "title": "Бретань",
-  "name": "Юбка в пол, расклешённая",
-  "color": "чёрно-белая клетка",
-  "fabric": "",
-  "measures": {
-   "bust": null,
-   "waist": null,
-   "hips": null,
-   "length": null
-  },
-  "condition": "новое с биркой",
-  "price": 6000,
-  "old_price": null,
-  "photos": [
-   "photos/SH-28-1.jpg",
-   "photos/SH-28-2.jpg",
-   "photos/SH-28-3.jpg",
-   "photos/SH-28-4.jpg"
-  ],
-  "note": "Как SH-27, но без пуговиц.",
-  "variants": [
+    "status": "available",
+    "label": "с пуговицами"
+   },
    {
     "id": "SH-28",
     "size": "42",
-    "status": "available"
+    "status": "available",
+    "label": "без пуговиц"
    }
   ],
   "status": "available"

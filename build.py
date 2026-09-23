@@ -56,15 +56,19 @@ def main():
                 "photos": ["photos/" + p for p in photos],
                 "status": status,
                 "note": (row.get("note") or "").strip(),
+                "variant": (row.get("variant") or "").strip(),
             })
 
     # Одна модель в нескольких размерах (одинаковый `model`) — одна карточка с вариантами
     groups = {}
     for it in items:
         key = it.pop("model") or it["id"]
-        g = groups.setdefault(key, {**{k: v for k, v in it.items() if k not in ("size", "status")},
+        g = groups.setdefault(key, {**{k: v for k, v in it.items() if k not in ("size", "status", "variant")},
                                     "id": key, "variants": []})
-        g["variants"].append({"id": it["id"], "size": it["size"], "status": it["status"]})
+        v = {"id": it["id"], "size": it["size"], "status": it["status"]}
+        if it["variant"]:
+            v["label"] = it["variant"]  # чем отличаются экземпляры одного размера (для менеджера)
+        g["variants"].append(v)
         if not g["photos"] and it["photos"]:
             g["photos"] = it["photos"]
     grouped = list(groups.values())

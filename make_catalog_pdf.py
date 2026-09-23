@@ -38,7 +38,7 @@ for pi in range(0, len(items), COLS * ROWS):
             else: cur = (cur + " " + w_).strip()
         lines.append(cur)
         for i, ln in enumerate(lines[:2]): d.text((x + 20, ty + 150 + i * 44), ln, font=f_desc, fill="#4a4a4a")
-        sizes = ", ".join("%s (%s)" % (v["size"], v["id"]) if len(it["variants"]) > 1 else v["size"] for v in it["variants"])
+        sizes = ", ".join("%s (%s)" % (v["size"] + (" " + v["label"] if v.get("label") else ""), v["id"]) if len(it["variants"]) > 1 else v["size"] for v in it["variants"])
         d.text((x + 20, ty + 250), "Размер: " + sizes, font=f_small, fill="#141414")
         d.text((x + 20, ty + 296), it["color"], font=f_small, fill="#767676")
     pages.append(page)
