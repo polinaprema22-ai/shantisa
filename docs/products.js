@@ -141,7 +141,8 @@ window.PRODUCTS = [
   "old_price": null,
   "photos": [
    "photos/SH-05-1.jpg?v=f5347dc1",
-   "photos/SH-05-2.jpg?v=397ab988"
+   "photos/SH-05-2.jpg?v=397ab988",
+   "photos/SH-05-3.jpg?v=13383e64"
   ],
   "note": "",
   "variants": [
