@@ -1019,9 +1019,8 @@ window.PRODUCTS = [
   "price": 7000,
   "old_price": null,
   "photos": [
-   "photos/SH-42-1.jpg?v=94eadbe7",
-   "photos/SH-42-2.jpg?v=9d79a51c",
-   "photos/SH-42-3.jpg?v=a9e760e3"
+   "photos/SH-42-1.jpg?v=19ecb61f",
+   "photos/SH-42-2.jpg?v=47c346b7"
   ],
   "note": "",
   "variants": [
