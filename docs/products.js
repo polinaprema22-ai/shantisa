@@ -1212,7 +1212,9 @@ window.PRODUCTS = [
   "photos": [
    "photos/SH-48-1.jpg?v=a0b5537e",
    "photos/SH-48-2.jpg?v=44e53457",
-   "photos/SH-48-3.jpg?v=1ec9cb3f"
+   "photos/SH-48-3.jpg?v=1ec9cb3f",
+   "photos/SH-48-4.jpg?v=06f449f9",
+   "photos/SH-48-5.jpg?v=ebc1948a"
   ],
   "note": "Размер примерный",
   "variants": [
