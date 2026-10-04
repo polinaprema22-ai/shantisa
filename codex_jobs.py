@@ -29,6 +29,8 @@ ITEMS = {
  "SH-42": ("dress", "Сакура", "сарафан без рукавов на пуговицах спереди: розовый фон с серо-зелёным растительным принтом (лилии и листья), приталенный лиф с V-вырезом и широкими бретелями, пышная собранная юбка ниже колена"),
  "SH-45": ("kids", "Ирис", "детский сиреневый укороченный топ-футболка свободного кроя с короткими рукавами и круглым вырезом, на ребёнка около 5 лет"),
  "SH-46": ("kids", "Том", "детская рубашка для мальчика 5–7 лет в крупную чёрно-белую клетку: отложной воротник, пуговицы спереди, длинные рукава"),
+ "SH-12": ("dress", "Волна", "небесно-голубое трикотажное платье-халат с запахом: V-вырез, рукава до локтя, отрезная талия, расклешённая юбка, завязки на талии; длина строго до колена — подол на уровне колена, не выше"),
+ "SH-36": ("dress", "Ваниль", "бледно-жёлтое (ванильное) кружевное платье в пол на подкладке: облегающий силуэт, круглый вырез под горло, длинные узкие рукава с пышными двойными воланами на запястьях"),
  "SH-48": ("dress", "Жемчуг", "белое облегающее длинное платье на тонких бретелях с прямым верхом лифа; на бёдрах сиреневая кружевная баска; узкая белая юбка в пол"),
 }
 RULES = ("Сохрани вещь максимально идентичной оригиналу: цвет и оттенок ткани, принт, фактура, длина, силуэт, ширина юбки, посадка, "
@@ -79,14 +81,16 @@ def build():
     json.dump(jobs, open(os.path.join(ROOT, "raw/codex/jobs.json"), "w"), ensure_ascii=False, indent=1)
     print(len(jobs), "заданий")
 
+failed = set()
+
 def run(limit):
-    jobs = json.load(open(os.path.join(ROOT, "raw/codex/jobs.json")))
     done = 0
-    for j in jobs:
-        if os.path.exists(j["out"]):
-            continue
-        if done >= limit:
+    while done < limit:
+        jobs = json.load(open(os.path.join(ROOT, "raw/codex/jobs.json")))
+        todo = [j for j in jobs if not os.path.exists(j["out"]) and (j["id"], j["view"]) not in failed]
+        if not todo:
             break
+        j = todo[0]
         t = time.time()
         r = subprocess.run([DRAW, j["prompt"], j["out"]] + j["refs"], capture_output=True, text=True, errors="replace",
                            env=dict(os.environ, LANG="en_US.UTF-8", LC_ALL="en_US.UTF-8"))
@@ -95,6 +99,8 @@ def run(limit):
         open(os.path.join(ROOT, "raw/codex/progress.jsonl"), "a").write(json.dumps(rec, ensure_ascii=False) + "\n")
         print(json.dumps(rec, ensure_ascii=False), flush=True)
         done += 1
+        if '"ok": true' not in line:
+            failed.add((j["id"], j["view"]))
         if "лимит" in line:
             print("СТОП: лимит подписки", flush=True); break
 
