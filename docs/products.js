@@ -1186,9 +1186,9 @@ window.PRODUCTS = [
   "price": 2500,
   "old_price": null,
   "photos": [
-   "photos/SH-50-1.jpg?v=40476f62",
-   "photos/SH-50-2.jpg?v=6c28655e",
-   "photos/SH-50-3.jpg?v=ff497609"
+   "photos/SH-50-1.jpg?v=13808059",
+   "photos/SH-50-2.jpg?v=40476f62",
+   "photos/SH-50-3.jpg?v=c1ba369f"
   ],
   "note": "Размер на бирке не указан — менеджер подскажет по замерам.",
   "variants": [
