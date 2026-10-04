@@ -706,7 +706,8 @@ window.PRODUCTS = [
   "old_price": null,
   "photos": [
    "photos/SH-30-1.jpg?v=6cabebc8",
-   "photos/SH-30-2.jpg?v=90a2b927"
+   "photos/SH-30-2.jpg?v=90a2b927",
+   "photos/SH-30-3.jpg?v=59842db8"
   ],
   "note": "",
   "variants": [
