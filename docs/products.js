@@ -1078,7 +1078,7 @@ window.PRODUCTS = [
    "length": null
   },
   "condition": "новое с биркой",
-  "price": 2500,
+  "price": 3500,
   "old_price": null,
   "photos": [
    "photos/SH-43-1.jpg?v=a417a769",
