@@ -178,6 +178,33 @@
     border: 0; border-radius: 18px; background: var(--surface); cursor: pointer; font-size: 20px; line-height: 1;
   }
   .note { font-size: 16px; color: var(--muted); border-left: 2px solid var(--line); padding-left: 12px; font-style: italic; }
+  button.order { border: 0; width: 100%; cursor: pointer; font-family: inherit; }
+  .order.incart { background: var(--ink); }
+  .quick { align-self: center; font-size: 15px; color: var(--muted); font-style: italic; }
+  .quick a { color: inherit; }
+  .incart-mark { position: absolute; right: 8px; top: 8px; padding: 4px 9px; font-size: 12px; font-weight: 700; letter-spacing: .12em;
+                 text-transform: uppercase; background: var(--accent); color: var(--accent-ink); }
+  .cartbtn { position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 5; display: none;
+             align-items: center; gap: 10px; min-height: 52px; padding: 0 20px; border: 0; cursor: pointer;
+             background: var(--accent); color: var(--accent-ink); font: 700 15px var(--body); letter-spacing: .14em; text-transform: uppercase;
+             box-shadow: 0 6px 24px rgba(20, 20, 20, .18); }
+  .cartbtn.show { display: inline-flex; }
+  .cartbtn b { display: inline-grid; place-items: center; min-width: 26px; height: 26px; border-radius: 13px; background: var(--accent-ink); color: var(--accent); font-size: 14px; letter-spacing: 0; }
+  #cartDlg { width: min(560px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); padding: 0; border: 0; background: var(--ground); color: var(--ink); }
+  #cartDlg::backdrop { background: rgba(20, 20, 20, .55); }
+  .cart { padding: 24px; display: grid; gap: 16px; }
+  .cart h3 { margin: 0; font: 400 30px var(--display); }
+  .cart ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .cart li { display: grid; grid-template-columns: 56px 1fr auto auto; gap: 12px; align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
+  .cart li img { width: 56px; aspect-ratio: 9 / 16; object-fit: cover; background: var(--surface); display: block; }
+  .cart .t { font-weight: 600; font-size: 17px; }
+  .cart .s { color: var(--muted); font-size: 14px; letter-spacing: .06em; }
+  .cart .pr { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .cart .rm { border: 0; background: none; font-size: 22px; line-height: 1; cursor: pointer; color: var(--muted); padding: 4px 6px; }
+  .cart .total { display: flex; justify-content: space-between; font-size: 20px; font-weight: 700; }
+  .cart .after { margin: 0; color: var(--muted); font-style: italic; font-size: 15px; }
+  .cart .empty-cart { color: var(--muted); font-style: italic; margin: 0; }
+  .cart .clear { justify-self: center; border: 0; background: none; color: var(--muted); text-decoration: underline; cursor: pointer; font: italic 15px var(--body); }
 
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
 </style>
@@ -188,7 +215,7 @@
     <img class="logo" src="logo.png" alt="Shantisa by Mila Tumanova" width="650" height="174">
     <p class="tagline">Мы не создаём платья — мы создаём состояния</p>
     <h1>Архив Shantisa. Последние вещи, созданные <em>Милой Тумановой.</em></h1>
-    <p class="lede">Каждая вещь в одном экземпляре, повторов не будет. Выберите вещь, нажмите «Заказать» — менеджер ответит в Telegram и всё оформит.</p>
+    <p class="lede">Каждая вещь в одном экземпляре, повторов не будет. Добавьте понравившиеся вещи в корзину и отправьте заказ — менеджер ответит в Telegram и всё оформит.</p>
   </header>
 
   <div class="bar" role="toolbar" aria-label="Фильтр">
@@ -205,7 +232,7 @@
   <section class="how" id="how">
     <h2>Как купить</h2>
     <ol class="steps">
-      <li><b>Напишите менеджеру</b><span>Кнопка «Заказать» в карточке вещи откроет Telegram с уже написанным артикулом.</span></li>
+      <li><b>Соберите корзину</b><span>Добавьте вещи в корзину и нажмите «Отправить менеджеру» — откроется Telegram с готовым списком.</span></li>
       <li><b>Бронь на 24 часа</b><span>Менеджер подтвердит наличие, ответит про посадку и посчитает доставку.</span></li>
       <li><b>Оплата переводом по СБП</b><span>Пришлём ссылку на перевод с точной суммой. Реквизиты — только в переписке.</span></li>
       <li><b>Отправка и трек-номер</b><span>Отправляем в течение 2 дней после оплаты и присылаем трек.</span></li>
@@ -225,6 +252,13 @@
   </footer>
 </div>
 
+<button class="cartbtn" id="cartBtn" type="button" aria-label="Открыть корзину">Корзина <b id="cartCount">0</b></button>
+
+<dialog id="cartDlg" aria-labelledby="cartTitle">
+  <button class="close" id="cartClose" aria-label="Закрыть">×</button>
+  <div class="cart" id="cart"></div>
+</dialog>
+
 <dialog id="dlg" aria-labelledby="dlgTitle">
   <button class="close" id="dlgClose" aria-label="Закрыть">×</button>
   <div class="sheet" id="sheet"></div>
@@ -234,7 +268,7 @@
   // Telegram-ник менеджера, без @. Заменить перед публикацией.
   const MANAGER = "QqoldGM";
 </script>
-<script src="products.js?v=fbef33b4"></script>
+<script src="products.js?v=c13703e4"></script>
 <script>
 (function () {
   const items = window.PRODUCTS || [];
@@ -256,6 +290,48 @@
   const tagFor = (p) => p.status === "sold" ? "Продано" : p.status === "reserved" ? "В брони" : "";
 
   $("footerTg").href = tgLink("Здравствуйте! У меня вопрос про архив Shantisa.");
+
+  // Корзина: артикулы выбранных вещей, хранятся только в браузере покупательницы.
+  const byVariant = {};
+  items.forEach((p) => p.variants.forEach((v) => { byVariant[v.id] = { p, v }; }));
+  let cart = [];
+  try { cart = JSON.parse(localStorage.getItem("shantisa-cart") || "[]"); } catch (e) { cart = []; }
+  cart = cart.filter((id, i, a) => byVariant[id] && byVariant[id].v.status === "available" && a.indexOf(id) === i);
+  const saveCart = () => {
+    try { localStorage.setItem("shantisa-cart", JSON.stringify(cart)); } catch (e) {}
+    $("cartCount").textContent = cart.length;
+    $("cartBtn").classList.toggle("show", cart.length > 0);
+  };
+  const cartLine = (id, i) => {
+    const { p, v } = byVariant[id];
+    return `${i + 1}. ${v.id} «${p.title || p.name}», ${p.color}, ${v.size ? "размер " + v.size : "размер подскажите"} — ${rub(p.price)}`;
+  };
+  function openCart() {
+    const total = cart.reduce((s, id) => s + (byVariant[id].p.price || 0), 0);
+    const text = cart.length ? "Здравствуйте! Хочу заказать:\n" + cart.map(cartLine).join("\n") + "\nИтого: " + rub(total) : "";
+    $("cart").innerHTML = `
+      <h3 id="cartTitle">Корзина</h3>
+      ${cart.length ? `<ul>${cart.map((id) => { const { p, v } = byVariant[id]; return `
+        <li><img src="${esc(p.photos[0] || "")}" alt="">
+          <div><div class="t">${esc(p.title || p.name)}</div><div class="s">${esc(v.id)} · ${esc(szText(v.size))}</div></div>
+          <span class="pr">${rub(p.price)}</span>
+          <button class="rm" type="button" data-rm="${esc(id)}" aria-label="Убрать ${esc(p.title || p.name)}">×</button></li>`; }).join("")}</ul>
+        <div class="total"><span>Итого</span><span>${rub(total)}</span></div>
+        <a class="order" href="${esc(tgLink(text))}" target="_blank" rel="noopener">Отправить менеджеру</a>
+        <p class="after">Откроется Telegram с готовым списком. Менеджер подтвердит наличие, забронирует вещи и посчитает доставку.</p>
+        <button class="clear" type="button" id="cartClear">Очистить корзину</button>`
+      : `<p class="empty-cart">Корзина пуста. Откройте вещь и нажмите «Добавить в корзину».</p>`}`;
+    if (!$("cartDlg").open) $("cartDlg").showModal();
+  }
+  $("cart").addEventListener("click", (e) => {
+    const rm = e.target.closest("[data-rm]");
+    if (rm) { cart = cart.filter((id) => id !== rm.dataset.rm); saveCart(); render(); openCart(); }
+    if (e.target.id === "cartClear") { cart = []; saveCart(); render(); openCart(); }
+  });
+  $("cartBtn").addEventListener("click", openCart);
+  $("cartClose").addEventListener("click", () => $("cartDlg").close());
+  $("cartDlg").addEventListener("click", (e) => { if (e.target === $("cartDlg")) $("cartDlg").close(); });
+  saveCart();
 
 
   const sizeKey = (a) => { if (/лет/i.test(a)) return 200; const i = SIZE_ORDER.indexOf(a); return i < 0 ? 99 : i; };
@@ -298,7 +374,7 @@
       .sort((a, b) => rank[a.status] - rank[b.status]);
     $("grid").innerHTML = list.length ? list.map((p, i) => `
       <button class="card ${p.status}" type="button" data-id="${esc(p.id)}" aria-label="${esc(p.title || p.name)}, размеры ${sizesOf(p).map(szText).join(", ")}, ${rub(p.price)}${tagFor(p) ? ", " + tagFor(p) : ""}">
-        <div class="ph">${photo(p.photos[0], p.name, i < 4)}${tagFor(p) ? `<span class="tag">${tagFor(p)}</span>` : ""}</div>
+        <div class="ph">${photo(p.photos[0], p.name, i < 4)}${tagFor(p) ? `<span class="tag">${tagFor(p)}</span>` : ""}${p.variants.some((v) => cart.includes(v.id)) ? `<span class="incart-mark">в корзине</span>` : ""}</div>
         <div class="meta">
           <div class="row"><span class="name">${esc(p.title || p.name)}</span><span class="size">${sizeLine(p)}</span></div>
           <span class="sub">${esc(p.title ? p.name : p.color)}</span>
@@ -345,14 +421,25 @@
         </table>
         <p class="hint">Обхваты по изделию: по плоскости ×2.</p>` : `<p class="hint">Размер указан по бирке. Сомневаетесь в посадке — спросите менеджера, он подскажет по конкретной вещи.</p>`}
         ${p.note ? `<p class="note">${esc(p.note)}</p>` : ""}
-        <a class="order" id="orderBtn" target="_blank" rel="noopener"></a>
+        <button class="order" id="orderBtn" type="button"></button>
+        <p class="quick" id="quick"></p>
       </div>`;
     const setVariant = (v) => {
       $("dlgId").textContent = v.id + (v.status === "sold" ? " · Продано" : v.status === "reserved" ? " · В брони" : "");
       const btn = $("orderBtn");
-      btn.href = v.status === "sold" ? "#" : tgLink(orderText(p, v));
+      const inCart = cart.includes(v.id);
       btn.setAttribute("aria-disabled", v.status === "sold");
-      btn.textContent = v.status === "sold" ? "Этот размер продан" : v.status === "reserved" ? "Спросить, освободится ли" : "Заказать у менеджера";
+      btn.classList.toggle("incart", inCart);
+      btn.textContent = v.status === "sold" ? "Этот размер продан" : v.status === "reserved" ? "Спросить, освободится ли"
+        : inCart ? "В корзине — оформить" : "Добавить в корзину";
+      btn.onclick = () => {
+        if (v.status === "sold") return;
+        if (v.status === "reserved") { window.open(tgLink(orderText(p, v)), "_blank", "noopener"); return; }
+        if (inCart) { $("dlg").close(); openCart(); return; }
+        cart.push(v.id); saveCart(); setVariant(v); render();
+      };
+      $("quick").innerHTML = v.status === "available"
+        ? `или <a href="${esc(tgLink(orderText(p, v)))}" target="_blank" rel="noopener">написать менеджеру только про эту вещь</a>` : "";
       $("sizes").querySelectorAll(".szchip").forEach((c) => c.setAttribute("aria-pressed", c.dataset.v === v.id));
       history.replaceState(null, "", "#" + v.id);
     };
