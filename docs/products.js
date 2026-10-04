@@ -1154,7 +1154,8 @@ window.PRODUCTS = [
   "old_price": null,
   "photos": [
    "photos/SH-48-1.jpg?v=a0b5537e",
-   "photos/SH-48-2.jpg?v=44e53457"
+   "photos/SH-48-2.jpg?v=44e53457",
+   "photos/SH-48-3.jpg?v=1ec9cb3f"
   ],
   "note": "Размер примерный",
   "variants": [
