@@ -288,7 +288,7 @@ window.PRODUCTS = [
   "id": "SH-12",
   "category": "Платья",
   "title": "Волна",
-  "name": "Платье с запахом, расклешённое, ниже колена",
+  "name": "Платье-халат с запахом, на завязках, ниже колена",
   "color": "голубой",
   "fabric": "",
   "measures": {
@@ -298,12 +298,13 @@ window.PRODUCTS = [
    "length": null
   },
   "condition": "новое с биркой",
-  "price": 7000,
+  "price": 5000,
   "old_price": null,
   "photos": [
    "photos/SH-12-1.jpg?v=0caa28cd",
    "photos/SH-12-2.jpg?v=7fe27d89",
-   "photos/SH-12-3.jpg?v=ba881b9f"
+   "photos/SH-12-3.jpg?v=ba881b9f",
+   "photos/SH-12-4.jpg?v=a6d9bac0"
   ],
   "note": "",
   "variants": [
@@ -1186,36 +1187,6 @@ window.PRODUCTS = [
    {
     "id": "SH-48",
     "size": "42–44",
-    "status": "available"
-   }
-  ],
-  "status": "available"
- },
- {
-  "id": "SH-49",
-  "category": "Платья",
-  "title": "Лазурь",
-  "name": "Халат с коротким рукавом, на завязках",
-  "color": "голубой",
-  "fabric": "",
-  "measures": {
-   "bust": null,
-   "waist": null,
-   "hips": null,
-   "length": null
-  },
-  "condition": "новое с биркой",
-  "price": 5000,
-  "old_price": null,
-  "photos": [
-   "photos/SH-49-1.jpg?v=a6d9bac0",
-   "photos/SH-49-2.jpg?v=e5abf42d"
-  ],
-  "note": "Размер на бирке не указан — менеджер подскажет по замерам.",
-  "variants": [
-   {
-    "id": "SH-49",
-    "size": "",
     "status": "available"
    }
   ],
