@@ -1153,11 +1153,7 @@ window.PRODUCTS = [
   "price": 12000,
   "old_price": null,
   "photos": [
-   "photos/SH-48-1.jpg?v=83acb478",
-   "photos/SH-48-2.jpg?v=5dd0cb2c",
-   "photos/SH-48-3.jpg?v=ad86644a",
-   "photos/SH-48-4.jpg?v=bdd983c7",
-   "photos/SH-48-5.jpg?v=bc7fd6fe"
+   "photos/SH-48-1.jpg?v=44e53457"
   ],
   "note": "Размер примерный",
   "variants": [
@@ -1190,11 +1186,11 @@ window.PRODUCTS = [
    "photos/SH-50-2.jpg?v=40476f62",
    "photos/SH-50-3.jpg?v=c1ba369f"
   ],
-  "note": "Размер на бирке не указан — менеджер подскажет по замерам.",
+  "note": "",
   "variants": [
    {
     "id": "SH-50",
-    "size": "",
+    "size": "XXS",
     "status": "available"
    }
   ],
