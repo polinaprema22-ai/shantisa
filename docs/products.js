@@ -898,7 +898,8 @@ window.PRODUCTS = [
   "photos": [
    "photos/SH-36-1.jpg?v=7913d1a6",
    "photos/SH-36-2.jpg?v=1d098ddd",
-   "photos/SH-36-3.jpg?v=1e854292"
+   "photos/SH-36-3.jpg?v=1e854292",
+   "photos/SH-36-4.jpg?v=a3975c93"
   ],
   "note": "",
   "variants": [
