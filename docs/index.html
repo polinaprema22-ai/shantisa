@@ -234,7 +234,7 @@
   // Telegram-ник менеджера, без @. Заменить перед публикацией.
   const MANAGER = "QqoldGM";
 </script>
-<script src="products.js?v=63772de4"></script>
+<script src="products.js?v=02aeebf0"></script>
 <script>
 (function () {
   const items = window.PRODUCTS || [];
@@ -246,11 +246,12 @@
   const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const tgLink = (text) => "https://t.me/" + MANAGER + (text ? "?text=" + encodeURIComponent(text) : "");
   const orderText = (p, v) => v.status === "reserved"
-    ? `Здравствуйте! ${v.id} «${p.title || p.name}» (${v.size}) сейчас в брони — подскажите, если освободится?`
-    : `Здравствуйте! Хочу ${v.id} «${p.title || p.name}», ${p.color}, размер ${v.size}.`;
+    ? `Здравствуйте! ${v.id} «${p.title || p.name}» (${szText(v.size)}) сейчас в брони — подскажите, если освободится?`
+    : `Здравствуйте! Хочу ${v.id} «${p.title || p.name}», ${p.color}, ${v.size ? "размер " + v.size : "подскажите размер"}.`;
+  const szText = (s) => s || "уточнить";  // размер не указан на бирке
   const sizesOf = (p) => [...new Set(p.variants.map((v) => v.size))];
   const sizeLine = (p) => sizesOf(p).map((sz) =>
-    p.variants.some((v) => v.size === sz && v.status !== "sold") ? esc(sz) : `<s>${esc(sz)}</s>`).join(" · ");
+    p.variants.some((v) => v.size === sz && v.status !== "sold") ? esc(szText(sz)) : `<s>${esc(szText(sz))}</s>`).join(" · ");
   const tagFor = (p) => p.status === "sold" ? "Продано" : p.status === "reserved" ? "В брони" : "";
 
   $("footerTg").href = tgLink("Здравствуйте! У меня вопрос про архив Shantisa.");
@@ -269,7 +270,7 @@
   });
   function drawSizes() {
     const pool = items.filter((p) => state.cat === "all" || p.category === state.cat);
-    const sizes = [...new Set(pool.flatMap(sizesOf))]
+    const sizes = [...new Set(pool.flatMap(sizesOf))].filter(Boolean)
       .sort((a, b) => sizeKey(a) - sizeKey(b) || a.localeCompare(b, "ru", { numeric: true }));
     $("chips").innerHTML = ["all", ...sizes].map((s) =>
       `<button class="chip" type="button" data-size="${esc(s)}" aria-pressed="${s === state.size}">${s === "all" ? "Все" : esc(s)}</button>`).join("");
@@ -295,7 +296,7 @@
       .filter((p) => !(state.hideSold && p.status === "sold"))
       .sort((a, b) => rank[a.status] - rank[b.status]);
     $("grid").innerHTML = list.length ? list.map((p, i) => `
-      <button class="card ${p.status}" type="button" data-id="${esc(p.id)}" aria-label="${esc(p.title || p.name)}, размеры ${sizesOf(p).join(", ")}, ${rub(p.price)}${tagFor(p) ? ", " + tagFor(p) : ""}">
+      <button class="card ${p.status}" type="button" data-id="${esc(p.id)}" aria-label="${esc(p.title || p.name)}, размеры ${sizesOf(p).map(szText).join(", ")}, ${rub(p.price)}${tagFor(p) ? ", " + tagFor(p) : ""}">
         <div class="ph">${photo(p.photos[0], p.name, i < 4)}${tagFor(p) ? `<span class="tag">${tagFor(p)}</span>` : ""}</div>
         <div class="meta">
           <div class="row"><span class="name">${esc(p.title || p.name)}</span><span class="size">${sizeLine(p)}</span></div>
@@ -313,7 +314,7 @@
       const vs = p.variants.filter((v) => v.size === sz);
       const free = vs.filter((v) => v.status === "available");
       const v = free[0] || vs.find((x) => x.status === "reserved") || vs[0];
-      const label = esc(sz) + (free.length > 1 ? ` <small>×${free.length}</small>` : "");
+      const label = esc(szText(sz)) + (free.length > 1 ? ` <small>×${free.length}</small>` : "");
       return `<button type="button" class="szchip ${v.status}" data-v="${v.id}" aria-pressed="${v.id === chosen.id}">${label}</button>`;
     }).join("");
     const cell = (v) => v ? `${v}<small>см</small>` : "—";

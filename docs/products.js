@@ -13,7 +13,7 @@ window.PRODUCTS = [
    "length": null
   },
   "condition": "новое с биркой",
-  "price": 4500,
+  "price": 4000,
   "old_price": null,
   "photos": [
    "photos/SH-01-1.jpg?v=4a08a9ec",
@@ -45,7 +45,7 @@ window.PRODUCTS = [
    "length": null
   },
   "condition": "новое с биркой",
-  "price": 4500,
+  "price": 4000,
   "old_price": null,
   "photos": [
    "photos/SH-02-1.jpg?v=a86c55dc",
@@ -142,7 +142,7 @@ window.PRODUCTS = [
    "length": null
   },
   "condition": "новое с биркой",
-  "price": 4500,
+  "price": 4000,
   "old_price": null,
   "photos": [
    "photos/SH-05-1.jpg?v=2a66ee2a",
@@ -173,7 +173,7 @@ window.PRODUCTS = [
    "length": null
   },
   "condition": "новое с биркой",
-  "price": 4500,
+  "price": 4000,
   "old_price": null,
   "photos": [
    "photos/SH-06-1.jpg?v=1091a4a6",
@@ -204,7 +204,7 @@ window.PRODUCTS = [
    "length": null
   },
   "condition": "новое с биркой",
-  "price": 4500,
+  "price": 4000,
   "old_price": null,
   "photos": [
    "photos/SH-07-1.jpg?v=8fdb62bb",
@@ -239,7 +239,7 @@ window.PRODUCTS = [
    "length": null
   },
   "condition": "новое с биркой",
-  "price": 4500,
+  "price": 4000,
   "old_price": null,
   "photos": [
    "photos/SH-09-1.jpg?v=e97b5385",
@@ -334,7 +334,7 @@ window.PRODUCTS = [
    "length": null
   },
   "condition": "новое с биркой",
-  "price": 12000,
+  "price": 10000,
   "old_price": null,
   "photos": [
    "photos/SH-13-1.jpg?v=2ee69c10",
@@ -475,7 +475,7 @@ window.PRODUCTS = [
    "length": null
   },
   "condition": "новое с биркой",
-  "price": 4500,
+  "price": 7000,
   "old_price": null,
   "photos": [
    "photos/SH-20-1.jpg?v=76641edd",
@@ -548,7 +548,7 @@ window.PRODUCTS = [
    "length": null
   },
   "condition": "новое с биркой",
-  "price": 7000,
+  "price": 5000,
   "old_price": null,
   "photos": [
    "photos/SH-24-1.jpg?v=22420b6f",
@@ -644,7 +644,7 @@ window.PRODUCTS = [
    "length": null
   },
   "condition": "новое с биркой",
-  "price": 6000,
+  "price": 4000,
   "old_price": null,
   "photos": [
    "photos/SH-27-1.jpg?v=3155989e",
@@ -683,7 +683,7 @@ window.PRODUCTS = [
    "length": null
   },
   "condition": "новое с биркой",
-  "price": 6000,
+  "price": 4000,
   "old_price": null,
   "photos": [
    "photos/SH-29-1.jpg?v=3a097b41",
@@ -746,7 +746,7 @@ window.PRODUCTS = [
    "length": null
   },
   "condition": "новое с биркой",
-  "price": 12000,
+  "price": 11000,
   "old_price": null,
   "photos": [
    "photos/SH-31-1.jpg?v=8079934e",
@@ -777,7 +777,7 @@ window.PRODUCTS = [
    "length": null
   },
   "condition": "новое с биркой",
-  "price": 12000,
+  "price": 11000,
   "old_price": null,
   "photos": [
    "photos/SH-32-1.jpg?v=f26025ad",
@@ -846,7 +846,7 @@ window.PRODUCTS = [
    "length": null
   },
   "condition": "новое с биркой",
-  "price": 12000,
+  "price": 10000,
   "old_price": null,
   "photos": [
    "photos/SH-35-1.jpg?v=b35cd248",
@@ -912,7 +912,7 @@ window.PRODUCTS = [
    "length": null
   },
   "condition": "новое с биркой",
-  "price": 12000,
+  "price": 11000,
   "old_price": null,
   "photos": [
    "photos/SH-37-1.jpg?v=3da622a6",
@@ -982,7 +982,7 @@ window.PRODUCTS = [
    "length": null
   },
   "condition": "новое с биркой",
-  "price": 12000,
+  "price": 10000,
   "old_price": null,
   "photos": [
    "photos/SH-40-1.jpg?v=937dd717",
@@ -1016,13 +1016,13 @@ window.PRODUCTS = [
    "length": null
   },
   "condition": "новое с биркой",
-  "price": 5500,
+  "price": 5000,
   "old_price": null,
   "photos": [
-   "photos/SH-41-1.jpg?v=4bab23ae",
-   "photos/SH-41-2.jpg?v=d5395a8d",
-   "photos/SH-41-3.jpg?v=8091c8eb",
-   "photos/SH-41-4.jpg?v=c694dc6c"
+   "photos/SH-41-1.jpg?v=6646a1b9",
+   "photos/SH-41-2.jpg?v=eac5a761",
+   "photos/SH-41-3.jpg?v=a94285c9",
+   "photos/SH-41-4.jpg?v=8f50c902"
   ],
   "note": "",
   "variants": [
@@ -1147,7 +1147,7 @@ window.PRODUCTS = [
    "length": null
   },
   "condition": "новое с биркой",
-  "price": 2500,
+  "price": 3500,
   "old_price": null,
   "photos": [
    "photos/SH-46-1.jpg?v=5897bea2"
@@ -1195,6 +1195,66 @@ window.PRODUCTS = [
    {
     "id": "SH-48",
     "size": "42–44",
+    "status": "available"
+   }
+  ],
+  "status": "available"
+ },
+ {
+  "id": "SH-49",
+  "category": "Платья",
+  "title": "Лазурь",
+  "name": "Халат с коротким рукавом, на завязках",
+  "color": "голубой",
+  "fabric": "",
+  "measures": {
+   "bust": null,
+   "waist": null,
+   "hips": null,
+   "length": null
+  },
+  "condition": "новое с биркой",
+  "price": 5000,
+  "old_price": null,
+  "photos": [
+   "photos/SH-49-1.jpg?v=a6d9bac0",
+   "photos/SH-49-2.jpg?v=e5abf42d"
+  ],
+  "note": "Размер на бирке не указан — менеджер подскажет по замерам.",
+  "variants": [
+   {
+    "id": "SH-49",
+    "size": "",
+    "status": "available"
+   }
+  ],
+  "status": "available"
+ },
+ {
+  "id": "SH-50",
+  "category": "Топы",
+  "title": "Гранат",
+  "name": "Укороченный топ с коротким рукавом",
+  "color": "бордовый",
+  "fabric": "",
+  "measures": {
+   "bust": null,
+   "waist": null,
+   "hips": null,
+   "length": null
+  },
+  "condition": "новое с биркой",
+  "price": 2500,
+  "old_price": null,
+  "photos": [
+   "photos/SH-50-1.jpg?v=6c28655e",
+   "photos/SH-50-2.jpg?v=ff497609"
+  ],
+  "note": "Размер на бирке не указан — менеджер подскажет по замерам.",
+  "variants": [
+   {
+    "id": "SH-50",
+    "size": "",
     "status": "available"
    }
   ],
