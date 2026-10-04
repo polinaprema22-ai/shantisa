@@ -372,7 +372,9 @@ window.PRODUCTS = [
    "photos/SH-14-1.jpg",
    "photos/SH-14-2.jpg",
    "photos/SH-14-3.jpg",
-   "photos/SH-14-4.jpg"
+   "photos/SH-14-4.jpg",
+   "photos/SH-14-5.jpg",
+   "photos/SH-14-6.jpg"
   ],
   "note": "",
   "variants": [
@@ -580,7 +582,10 @@ window.PRODUCTS = [
   "old_price": null,
   "photos": [
    "photos/SH-25-1.jpg",
-   "photos/SH-25-2.jpg"
+   "photos/SH-25-2.jpg",
+   "photos/SH-25-3.jpg",
+   "photos/SH-25-4.jpg",
+   "photos/SH-25-5.jpg"
   ],
   "note": "",
   "variants": [
@@ -1076,7 +1081,11 @@ window.PRODUCTS = [
   "old_price": null,
   "photos": [
    "photos/SH-43-1.jpg",
-   "photos/SH-43-2.jpg"
+   "photos/SH-43-2.jpg",
+   "photos/SH-43-3.jpg",
+   "photos/SH-43-4.jpg",
+   "photos/SH-43-5.jpg",
+   "photos/SH-43-6.jpg"
   ],
   "note": "Размер без бирки, на вид",
   "variants": [

@@ -362,7 +362,7 @@
     const gal = $("gal");
     if (shots.length > 1) {
       const n = shots.length;
-      const cur = () => Math.round(gal.scrollLeft / gal.clientWidth);
+      const cur = () => gal.clientWidth ? Math.round(gal.scrollLeft / gal.clientWidth) : 0;  // до показа окна ширина 0
       const go = (i) => gal.scrollTo({ left: Math.max(0, Math.min(n - 1, i)) * gal.clientWidth, behavior: "smooth" });
       const sync = () => {
         const k = cur();
