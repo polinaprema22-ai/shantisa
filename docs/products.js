@@ -658,7 +658,7 @@ window.PRODUCTS = [
   "id": "SH-29",
   "category": "Юбки",
   "title": "Кармен",
-  "name": "Юбка-футляр ниже колена, кружево",
+  "name": "Юбка-футляр ниже колена, кружево, на пуговицах",
   "color": "чёрный",
   "fabric": "",
   "measures": {
@@ -671,8 +671,9 @@ window.PRODUCTS = [
   "price": 4000,
   "old_price": null,
   "photos": [
-   "photos/SH-29-1.jpg?v=0e8be096",
-   "photos/SH-29-2.jpg?v=cdd40194"
+   "photos/SH-29-r1.jpg?v=3a097b41",
+   "photos/SH-29-r2.jpg?v=b85d89e0",
+   "photos/SH-29-r3.jpg?v=3e68ec50"
   ],
   "note": "",
   "variants": [
