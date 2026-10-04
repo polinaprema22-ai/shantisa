@@ -199,8 +199,9 @@ window.PRODUCTS = [
   "price": 4000,
   "old_price": null,
   "photos": [
-   "photos/SH-07-1.jpg?v=8fdb62bb",
-   "photos/SH-07-2.jpg?v=ca608741"
+   "photos/SH-07-1.jpg?v=e9d5a6fe",
+   "photos/SH-07-2.jpg?v=4010eb1f",
+   "photos/SH-07-3.jpg?v=1d9c07b4"
   ],
   "note": "",
   "variants": [
@@ -234,8 +235,9 @@ window.PRODUCTS = [
   "price": 4000,
   "old_price": null,
   "photos": [
-   "photos/SH-09-1.jpg?v=e97b5385",
-   "photos/SH-09-2.jpg?v=0f535e8d"
+   "photos/SH-09-1.jpg?v=e97fc5f3",
+   "photos/SH-09-2.jpg?v=2a401e2a",
+   "photos/SH-09-3.jpg?v=f1648168"
   ],
   "note": "",
   "variants": [
@@ -361,12 +363,9 @@ window.PRODUCTS = [
   "price": 7000,
   "old_price": null,
   "photos": [
-   "photos/SH-14-1.jpg?v=e9ffc2df",
-   "photos/SH-14-2.jpg?v=e9d98d1f",
-   "photos/SH-14-3.jpg?v=6face5f4",
-   "photos/SH-14-4.jpg?v=2394d13a",
-   "photos/SH-14-5.jpg?v=8d978b97",
-   "photos/SH-14-6.jpg?v=4d7e154c"
+   "photos/SH-14-1.jpg?v=3dc30018",
+   "photos/SH-14-2.jpg?v=abacd868",
+   "photos/SH-14-3.jpg?v=2cb55d87"
   ],
   "note": "",
   "variants": [
