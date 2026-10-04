@@ -25,7 +25,7 @@ for pi in range(0, len(items), COLS * ROWS):
     for k, it in enumerate(items[pi:pi + COLS * ROWS]):
         x, y = M + (k % COLS) * cw, M + 160 + (k // COLS) * ch
         ph = int(ch * 0.62)
-        im = Image.open(ROOT / "docs" / it["photos"][0]).convert("RGB")
+        im = Image.open(ROOT / "docs" / it["photos"][0].split("?")[0]).convert("RGB")
         im.thumbnail((cw - 40, ph)); page.paste(im, (x + (cw - 40 - im.width) // 2 + 20, y))
         ty = y + ph + 24
         d.rectangle([x + 20, ty, x + 20 + 230, ty + 60], fill="#E40146"); d.text((x + 34, ty + 8), it["id"], font=f_id, fill="white")

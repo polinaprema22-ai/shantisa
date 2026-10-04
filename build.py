@@ -6,7 +6,9 @@
 Статус: «в наличии» / «бронь» / «продано».
 """
 import csv
+import hashlib
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -16,6 +18,11 @@ SITE = ROOT / "docs"
 OUT = SITE / "products.js"
 
 STATUS = {"в наличии": "available", "бронь": "reserved", "продано": "sold"}
+
+
+def ver(path):
+    """Метка версии по содержимому: заменили файл под тем же именем — браузер скачает заново."""
+    return hashlib.md5(path.read_bytes()).hexdigest()[:8] if path.exists() else "0"
 
 
 def num(value):
@@ -53,7 +60,7 @@ def main():
                 "condition": row["condition"].strip(),
                 "price": num(row["price"]),
                 "old_price": num(row.get("old_price")),
-                "photos": ["photos/" + p for p in photos],
+                "photos": ["photos/%s?v=%s" % (p, ver(SITE / "photos" / p)) for p in photos],
                 "status": status,
                 "note": (row.get("note") or "").strip(),
                 "variant": (row.get("variant") or "").strip(),
@@ -77,6 +84,9 @@ def main():
         g["status"] = "available" if "available" in st else "reserved" if "reserved" in st else "sold"
     OUT.write_text("window.PRODUCTS = " + json.dumps(grouped, ensure_ascii=False, indent=1) + ";\n",
                    encoding="utf-8")
+    page = SITE / "index.html"                         # ссылка на каталог тоже с меткой версии
+    page.write_text(re.sub(r'src="products\.js(\?v=[0-9a-f]+)?"', 'src="products.js?v=%s"' % ver(OUT),
+                           page.read_text(encoding="utf-8")), encoding="utf-8")
     sold = sum(i["status"] == "sold" for i in items)
     print("Вещей: %d (продано %d), карточек: %d → %s" % (len(items), sold, len(grouped), OUT.relative_to(ROOT)))
     if problems:
