@@ -516,12 +516,13 @@ window.PRODUCTS = [
    "length": null
   },
   "condition": "новое с биркой",
-  "price": 7000,
+  "price": 8000,
   "old_price": null,
   "photos": [
    "photos/SH-23-1.jpg",
    "photos/SH-23-2.jpg",
-   "photos/SH-23-3.jpg"
+   "photos/SH-23-3.jpg",
+   "photos/SH-23-4.jpg"
   ],
   "note": "",
   "variants": [
