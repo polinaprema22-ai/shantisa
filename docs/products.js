@@ -511,7 +511,8 @@ window.PRODUCTS = [
   "old_price": null,
   "photos": [
    "photos/SH-23-1.jpg?v=74fc233d",
-   "photos/SH-23-2.jpg?v=6786b61f"
+   "photos/SH-23-2.jpg?v=6786b61f",
+   "photos/SH-23-3.jpg?v=848ce781"
   ],
   "note": "",
   "variants": [
@@ -570,11 +571,8 @@ window.PRODUCTS = [
   "price": 7000,
   "old_price": null,
   "photos": [
-   "photos/SH-25-1.jpg?v=23c20d44",
-   "photos/SH-25-2.jpg?v=999bb63e",
-   "photos/SH-25-3.jpg?v=68ff9b91",
-   "photos/SH-25-4.jpg?v=4c615210",
-   "photos/SH-25-5.jpg?v=c99a7e3a"
+   "photos/SH-25-1.jpg?v=68513cd9",
+   "photos/SH-25-2.jpg?v=3e649b13"
   ],
   "note": "",
   "variants": [
