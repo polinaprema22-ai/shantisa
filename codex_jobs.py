@@ -75,6 +75,28 @@ def job(sid, view):
     return {"id": sid, "view": view, "out": os.path.join(ROOT, "raw/codex", sid, view + ".png"),
             "refs": refs + ([style] if style else []), "prompt": prompt}
 
+# оригиналы Марьяны, где видна спина (номер в mapping.tsv, с 0)
+BACKREF = {"SH-13": [1], "SH-18": [1], "SH-20": [1], "SH-26": [3], "SH-30": [2], "SH-32": [2], "SH-35": [1, 3], "SH-48": [4], "SH-23": [2]}
+
+def back_job(sid):
+    """Вид сзади: спереди кладём фото со спины, затем готовый студийный перед этой же вещи (если есть) для цвета и стиля."""
+    kind, title, desc = ITEMS[sid]
+    mp = {l.split("\t")[0]: l.split("\t")[1].split() for l in open(os.path.join(ROOT, "raw/tg/mapping.tsv")).read().splitlines() if "\t" in l}
+    base = refs_for(sid)
+    backs = [os.path.join(ROOT, "raw/tg/photos/%s.jpg" % mp[sid][i]) for i in BACKREF.get(sid, [])]
+    real = backs + [r for r in base if r not in backs][: max(0, 4 - len(backs))]
+    front = os.path.join(ROOT, "raw/codex", sid, "front.png")
+    extra = [front] if os.path.exists(front) else []
+    n = len(real)
+    head = "Карточка товара для интернет-магазина. Картинки 1–%d — фотографии настоящей вещи: главный и самый точный референс." % n
+    if backs:
+        head += " На картинках 1–%d вещь видна со спины или сбоку — по ним точно повтори спинку: вырез, застёжку, швы, бретели." % len(backs)
+    if extra:
+        head += " Картинка %d — эта же вещь спереди уже в нужном студийном стиле: повтори из неё цвет, ткань и свет." % (n + 1)
+    head += " Последняя картинка (%d) — только образец стиля съёмки; вещь с неё НЕ копировать." % (n + len(extra) + 1)
+    prompt = "%s\nВещь: «%s» — %s.\n%s\n%s" % (head, title, desc, VIEW["back"], RULES)
+    return {"id": sid, "view": "back", "out": os.path.join(ROOT, "raw/codex", sid, "back.png"), "refs": real + extra + [STYLE["product"]], "prompt": prompt}
+
 ONLY = {"SH-41": ["model"], "SH-50": ["model", "back"]}   # у этих нужно переделать не всё
 
 def build():
@@ -87,10 +109,19 @@ def build():
         for v in ONLY[sid]:
             if job(sid, v) not in jobs:
                 jobs.append(job(sid, v))
-    for sid, (kind, _, _) in ITEMS.items():          # проход 2: остальные ракурсы
+    # виды сзади: сначала те, у кого есть фото со спины и готовый перед, — ставим их перед оставшимся первым проходом
+    first = [back_job(sid) for sid in BACKREF if os.path.exists(os.path.join(ROOT, "raw/codex", sid, "front.png"))]
+    done = [j for j in jobs if os.path.exists(j["out"])]
+    todo = [j for j in jobs if not os.path.exists(j["out"])]
+    jobs = done + first + todo
+    ids_first = {j["id"] for j in first}
+    later = sorted([sid for sid, (k, _, _) in ITEMS.items() if k != "kids" and sid not in ONLY and sid not in ids_first],
+                   key=lambda s: s not in BACKREF)
+    jobs += [back_job(sid) for sid in later]
+    for sid, (kind, _, _) in ITEMS.items():          # проход 2: сбоку и 3/4
         if sid in ONLY:
             continue
-        for v in (["side", "34", "kidmodel"] if kind == "kids" else ["back", "side", "34"]):
+        for v in (["side", "34", "kidmodel"] if kind == "kids" else ["side", "34"]):
             jobs.append(job(sid, v))
     json.dump(jobs, open(os.path.join(ROOT, "raw/codex/jobs.json"), "w"), ensure_ascii=False, indent=1)
     print(len(jobs), "заданий")
