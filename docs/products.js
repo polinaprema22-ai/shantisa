@@ -987,7 +987,7 @@ window.PRODUCTS = [
   "price": 5000,
   "old_price": null,
   "photos": [
-   "photos/SH-41-1.jpg?v=6646a1b9",
+   "photos/SH-41-1.jpg?v=4dae88ee",
    "photos/SH-41-2.jpg?v=eac5a761",
    "photos/SH-41-3.jpg?v=a94285c9",
    "photos/SH-41-4.jpg?v=8f50c902"
