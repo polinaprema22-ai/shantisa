@@ -740,7 +740,8 @@ window.PRODUCTS = [
   "old_price": null,
   "photos": [
    "photos/SH-31-1.jpg?v=8add077d",
-   "photos/SH-31-2.jpg?v=77354a3e"
+   "photos/SH-31-2.jpg?v=77354a3e",
+   "photos/SH-31-3.jpg?v=0d5a31ea"
   ],
   "note": "",
   "variants": [
