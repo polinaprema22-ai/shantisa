@@ -792,10 +792,8 @@ window.PRODUCTS = [
   "price": 7000,
   "old_price": null,
   "photos": [
-   "photos/SH-33-1.jpg?v=d6ceedc8",
-   "photos/SH-33-2.jpg?v=a2089737",
-   "photos/SH-33-3.jpg?v=8a5e97c1",
-   "photos/SH-33-4.jpg?v=7e956ac0"
+   "photos/SH-33-1.jpg?v=77eb21ce",
+   "photos/SH-33-2.jpg?v=d22b4229"
   ],
   "note": "В комплекте пояс — можно завязать на талии.",
   "variants": [
