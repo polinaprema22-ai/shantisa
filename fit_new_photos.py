@@ -63,6 +63,12 @@ def fit(src, dst):
     else:                                              # не помещается — достраиваем фон
         H = round(w / ASPECT)
         add = H - h
+        if add <= 0:                                   # снимок уже не шире рамки — только подрезать по высоте
+            y = (h - H) // 2
+            out = im.crop((0, y, w, y + H))
+            out.save(dst, quality=90, optimize=True, progressive=True)
+            print(dst.split("/")[-1], "trim", out.size)
+            return
         touch_top, touch_bot = y0 <= 2, y1 >= h - 3
         if touch_bot and not touch_top:
             top, bot = add, 0
