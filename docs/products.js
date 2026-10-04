@@ -16,10 +16,8 @@ window.PRODUCTS = [
   "price": 4000,
   "old_price": null,
   "photos": [
-   "photos/SH-01-1.jpg?v=4a08a9ec",
-   "photos/SH-01-2.jpg?v=936aef97",
-   "photos/SH-01-3.jpg?v=c20faefd",
-   "photos/SH-01-4.jpg?v=b7f388a2"
+   "photos/SH-01-1.jpg?v=d16cdbf7",
+   "photos/SH-01-2.jpg?v=3065af53"
   ],
   "note": "",
   "variants": [
@@ -914,11 +912,10 @@ window.PRODUCTS = [
   "price": 11000,
   "old_price": null,
   "photos": [
-   "photos/SH-37-1.jpg?v=3da622a6",
-   "photos/SH-37-2.jpg?v=9844e05a",
-   "photos/SH-37-3.jpg?v=1a4f9b02",
-   "photos/SH-37-4.jpg?v=0d0a555c",
-   "photos/SH-37-5.jpg?v=a722ef34"
+   "photos/SH-37-1.jpg?v=8cc8b21d",
+   "photos/SH-37-2.jpg?v=9429da11",
+   "photos/SH-37-3.jpg?v=bd4ee828",
+   "photos/SH-37-4.jpg?v=96e182a0"
   ],
   "note": "",
   "variants": [
@@ -1246,8 +1243,9 @@ window.PRODUCTS = [
   "price": 2500,
   "old_price": null,
   "photos": [
-   "photos/SH-50-1.jpg?v=6c28655e",
-   "photos/SH-50-2.jpg?v=ff497609"
+   "photos/SH-50-1.jpg?v=40476f62",
+   "photos/SH-50-2.jpg?v=6c28655e",
+   "photos/SH-50-3.jpg?v=ff497609"
   ],
   "note": "Размер на бирке не указан — менеджер подскажет по замерам.",
   "variants": [
