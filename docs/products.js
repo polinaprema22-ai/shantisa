@@ -1131,8 +1131,11 @@ window.PRODUCTS = [
   "price": 2500,
   "old_price": null,
   "photos": [
-   "photos/SH-45-1.jpg?v=f3b1e5e0",
-   "photos/SH-45-2.jpg?v=e84a150e"
+   "photos/SH-45-1.jpg?v=28797462",
+   "photos/SH-45-2.jpg?v=f3b1e5e0",
+   "photos/SH-45-3.jpg?v=e84a150e",
+   "photos/SH-45-4.jpg?v=fcc0476e",
+   "photos/SH-45-5.jpg?v=599b2473"
   ],
   "note": "Размер без бирки, на вид",
   "variants": [
