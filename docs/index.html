@@ -249,7 +249,8 @@
     ? `Здравствуйте! ${v.id} «${p.title || p.name}» (${szText(v.size)}) сейчас в брони — подскажите, если освободится?`
     : `Здравствуйте! Хочу ${v.id} «${p.title || p.name}», ${p.color}, ${v.size ? "размер " + v.size : "подскажите размер"}.`;
   const szText = (s) => s || "уточнить";  // размер не указан на бирке
-  const sizesOf = (p) => [...new Set(p.variants.map((v) => v.size))];
+  const sizesOf = (p) => [...new Set(p.variants.map((v) => v.size))]
+    .sort((a, b) => sizeKey(a) - sizeKey(b) || a.localeCompare(b, "ru", { numeric: true }));
   const sizeLine = (p) => sizesOf(p).map((sz) =>
     p.variants.some((v) => v.size === sz && v.status !== "sold") ? esc(szText(sz)) : `<s>${esc(szText(sz))}</s>`).join(" · ");
   const tagFor = (p) => p.status === "sold" ? "Продано" : p.status === "reserved" ? "В брони" : "";
