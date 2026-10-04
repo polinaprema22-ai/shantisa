@@ -99,6 +99,8 @@
   .sub { font-size: 15px; color: var(--muted); font-style: italic; }
   .price { font-variant-numeric: tabular-nums; font-size: 18px; font-weight: 700; }
   .old { color: var(--muted); text-decoration: line-through; font-weight: 500; margin-left: 6px; font-size: 15px; }
+  .section-h { grid-column: 1 / -1; margin: 32px 0 0; padding-top: 28px; border-top: 1px solid var(--line); font: 400 34px/1.1 var(--display); }
+  .section-h:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
   .empty { grid-column: 1 / -1; color: var(--muted); padding-block: 40px; }
 
   /* Как купить */
@@ -372,7 +374,11 @@
       .filter((p) => state.size === "all" || p.variants.some((v) => v.size === state.size && !(state.hideSold && v.status === "sold")))
       .filter((p) => !(state.hideSold && p.status === "sold"))
       .sort((a, b) => rank[a.status] - rank[b.status]);
-    $("grid").innerHTML = list.length ? list.map((p, i) => `
+    // разделы по группам: Платья, Топы, Юбки, Детское
+    const groups = [...new Set(list.map((p) => p.category))]
+      .sort((x, y) => (CAT_ORDER.indexOf(x) + 1 || 99) - (CAT_ORDER.indexOf(y) + 1 || 99))
+      .map((c) => ({ c, ps: list.filter((p) => p.category === c) }));
+    const card = (p, i) => `
       <button class="card ${p.status}" type="button" data-id="${esc(p.id)}" aria-label="${esc(p.title || p.name)}, размеры ${sizesOf(p).map(szText).join(", ")}, ${rub(p.price)}${tagFor(p) ? ", " + tagFor(p) : ""}">
         <div class="ph">${photo(p.photos[0], p.name, i < 4)}${tagFor(p) ? `<span class="tag">${tagFor(p)}</span>` : ""}${p.variants.some((v) => cart.includes(v.id)) ? `<span class="incart-mark">в корзине</span>` : ""}</div>
         <div class="meta">
@@ -380,7 +386,10 @@
           <span class="sub">${esc(p.title ? p.name : p.color)}</span>
           <span class="price">${rub(p.price)}${p.old_price ? `<span class="old">${rub(p.old_price)}</span>` : ""}</span>
         </div>
-      </button>`).join("")
+      </button>`;
+    $("grid").innerHTML = list.length
+      ? (() => { let n = 0; return groups.map((g) =>
+          (groups.length > 1 ? `<h2 class="section-h">${esc(g.c)}</h2>` : "") + g.ps.map((p) => card(p, n++)).join("")).join(""); })()
       : `<p class="empty">В этом размере ничего не осталось. Напишите менеджеру — подскажем похожее.</p>`;
   }
 
