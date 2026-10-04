@@ -55,6 +55,12 @@ def fit(src, dst):
     cw = round(h * ASPECT)
     need = (x1 - x0) + 2 * SIDE * w
     closeup = x0 <= 2 or x1 >= w - 3                    # ткань во весь кадр — достраивать нечего
+    if cw > w:                                         # снимок уже не шире рамки — только подрезать по высоте
+        H = round(w / ASPECT); y = (h - H) // 2
+        out = im.crop((0, y, w, y + H))
+        out.save(dst, quality=90, optimize=True, progressive=True)
+        print(dst.split("/")[-1], "trim", out.size)
+        return
     if need <= cw or closeup:                          # помещается или крупный план — режем бока
         cx = (x0 + x1) / 2
         left = int(min(max(0, cx - cw / 2), w - cw))
