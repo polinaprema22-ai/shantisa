@@ -107,10 +107,9 @@ window.PRODUCTS = [
   "price": 4500,
   "old_price": null,
   "photos": [
-   "photos/SH-04-1.jpg?v=fd99627a",
-   "photos/SH-04-2.jpg?v=a53fd909",
-   "photos/SH-04-3.jpg?v=942818ba",
-   "photos/SH-04-4.jpg?v=58453a34"
+   "photos/SH-04-1.jpg?v=74be95a8",
+   "photos/SH-04-2.jpg?v=9fdb84c1",
+   "photos/SH-04-3.jpg?v=e59389b9"
   ],
   "note": "",
   "variants": [
@@ -139,9 +138,10 @@ window.PRODUCTS = [
   "price": 4000,
   "old_price": null,
   "photos": [
-   "photos/SH-05-1.jpg?v=2a66ee2a",
-   "photos/SH-05-2.jpg?v=17644dc2",
-   "photos/SH-05-3.jpg?v=a721d30a"
+   "photos/SH-05-1.jpg?v=3b72caac",
+   "photos/SH-05-2.jpg?v=2a66ee2a",
+   "photos/SH-05-3.jpg?v=17644dc2",
+   "photos/SH-05-4.jpg?v=a721d30a"
   ],
   "note": "",
   "variants": [
@@ -300,10 +300,9 @@ window.PRODUCTS = [
   "price": 5000,
   "old_price": null,
   "photos": [
-   "photos/SH-12-1.jpg?v=0caa28cd",
-   "photos/SH-12-2.jpg?v=7fe27d89",
-   "photos/SH-12-3.jpg?v=ba881b9f",
-   "photos/SH-12-4.jpg?v=a6d9bac0"
+   "photos/SH-12-1.jpg?v=0cb927ec",
+   "photos/SH-12-2.jpg?v=c46f483a",
+   "photos/SH-12-3.jpg?v=ba881b9f"
   ],
   "note": "",
   "variants": [
@@ -642,12 +641,11 @@ window.PRODUCTS = [
   "price": 4000,
   "old_price": null,
   "photos": [
-   "photos/SH-27-1.jpg?v=3155989e",
-   "photos/SH-27-2.jpg?v=72176608",
-   "photos/SH-27-3.jpg?v=557e57ea",
-   "photos/SH-27-4.jpg?v=5de8af9e"
+   "photos/SH-27-1.jpg?v=37b2e27e",
+   "photos/SH-27-2.jpg?v=19e39f40",
+   "photos/SH-27-3.jpg?v=f8044906"
   ],
-  "note": "Таких юбок две, обе 42 размера: одна с пуговицами спереди до низа, вторая без пуговиц. Напишите менеджеру, какая нравится.",
+  "note": "Таких юбок две, обе 42 размера: одна с пуговицами спереди до низа (2-е фото), вторая без пуговиц (3-е фото). Напишите менеджеру, какая нравится.",
   "variants": [
    {
     "id": "SH-27",
