@@ -64,6 +64,7 @@ def main():
                 "status": status,
                 "note": (row.get("note") or "").strip(),
                 "variant": (row.get("variant") or "").strip(),
+                "story": (row.get("story") or "").strip(),
             })
 
     # Одна модель в нескольких размерах (одинаковый `model`) — одна карточка с вариантами

@@ -151,6 +151,7 @@
   .info h3 { margin: 4px 0 0; font: 400 28px/1.2 var(--display); text-wrap: balance; }
   .info .desc { margin: 6px 0 0; color: var(--muted); font-size: 17px; font-style: italic; }
   .info .price { font-size: 22px; color: var(--accent); }
+  .info .story { margin: 0; font-size: 19px; line-height: 1.45; font-style: italic; color: var(--ink); }
   .spec { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 8px 18px; font-size: 17px; }
   .spec dt { color: var(--muted); }
   .spec dd { margin: 0; }
@@ -270,7 +271,7 @@
   // Telegram-ник менеджера, без @. Заменить перед публикацией.
   const MANAGER = "Daniil_Artemyev";
 </script>
-<script src="products.js?v=663a7b0e"></script>
+<script src="products.js?v=41f80bd5"></script>
 <script>
 (function () {
   const items = window.PRODUCTS || [];
@@ -417,6 +418,7 @@
       </div>
       <div class="info">
         <div><div class="id" id="dlgId"></div><h3 id="dlgTitle">${esc(p.title || p.name)}</h3>${p.title ? `<p class="desc">${esc(p.name)}</p>` : ""}</div>
+        ${p.story ? `<p class="story">${esc(p.story)}</p>` : ""}
         <div class="price">${rub(p.price)}${p.old_price ? `<span class="old">${rub(p.old_price)}</span>` : ""}</div>
         <div class="sizes" id="sizes"><span class="spec-label">Размер</span>${sizeChips}</div>
         <dl class="spec">
