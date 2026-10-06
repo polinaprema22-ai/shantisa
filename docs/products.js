@@ -328,10 +328,10 @@ window.PRODUCTS = [
    {
     "id": "SH-12",
     "size": "44",
-    "status": "available"
+    "status": "sold"
    }
   ],
-  "status": "available"
+  "status": "sold"
  },
  {
   "id": "SH-13",
@@ -362,10 +362,10 @@ window.PRODUCTS = [
    {
     "id": "SH-13",
     "size": "38",
-    "status": "available"
+    "status": "sold"
    }
   ],
-  "status": "available"
+  "status": "sold"
  },
  {
   "id": "SH-14",
@@ -904,10 +904,10 @@ window.PRODUCTS = [
    {
     "id": "SH-35",
     "size": "44",
-    "status": "available"
+    "status": "sold"
    }
   ],
-  "status": "available"
+  "status": "sold"
  },
  {
   "id": "SH-36",
