@@ -26,10 +26,10 @@ window.PRODUCTS = [
    {
     "id": "SH-01",
     "size": "46",
-    "status": "available"
+    "status": "reserved"
    }
   ],
-  "status": "available"
+  "status": "reserved"
  },
  {
   "id": "SH-02",
@@ -260,7 +260,7 @@ window.PRODUCTS = [
    {
     "id": "SH-10",
     "size": "46",
-    "status": "available"
+    "status": "reserved"
    }
   ],
   "status": "available"
@@ -439,7 +439,7 @@ window.PRODUCTS = [
    {
     "id": "SH-17",
     "size": "42",
-    "status": "available"
+    "status": "reserved"
    }
   ],
   "status": "available"
