@@ -1076,10 +1076,10 @@ window.PRODUCTS = [
    {
     "id": "SH-41",
     "size": "48",
-    "status": "available"
+    "status": "sold"
    }
   ],
-  "status": "available"
+  "status": "sold"
  },
  {
   "id": "SH-42",
